@@ -82,4 +82,8 @@ public class LaLUtil {
 		return lines;
 
 	}
+
+	public static List<LaL> getLalPoints() {
+		return null;
+	}
 }

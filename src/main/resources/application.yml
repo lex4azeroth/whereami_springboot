@@ -1,0 +1,37 @@
+# Server settings  
+server:  
+    port:8080  
+    address:localhost  
+  
+# DATASOURCE  
+jdbc:  
+    driverClass: com.mysql.jdbc.Driver  
+    url: jdbc:mysql://127.0.0.1:3306/way?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false  
+    username: root  
+    password: root  
+
+mybatis: 
+  mapperLocations: classpath:mapper/*.xml
+  typeAliasesPackage: com.almond.way.server.model
+  
+mapper:
+    mappers:
+        - tk.mybatis.springboot.util.MyMapper
+    not-empty: false
+    identity: MYSQL
+     
+# SPRING PROFILES  
+spring:         
+    # HTTP ENCODING  
+    http:  
+        encoding.charset: UTF-8  
+        encoding.enable: true  
+        encoding.force: true
+        
+        
+# LOGGING  
+logging:  
+    level:  
+       com.ibatis:DEBUG  
+  
+ 
