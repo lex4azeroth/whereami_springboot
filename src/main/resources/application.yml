@@ -14,11 +14,11 @@ mybatis:
   mapperLocations: classpath:mapper/*.xml
   typeAliasesPackage: com.almond.way.server.model
   
-mapper:
-    mappers:
-        - tk.mybatis.springboot.util.MyMapper
-    not-empty: false
-    identity: MYSQL
+#mapper:
+#    mappers:
+#        - tk.mybatis.springboot.util.MyMapper
+#    not-empty: false
+#    identity: MYSQL
      
 # SPRING PROFILES  
 spring:         

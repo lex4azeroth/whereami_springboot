@@ -1,9 +1,10 @@
 package com.almond.way.server.configuration;
 
-import org.apache.commons.dbcp.BasicDataSource;
+//import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 @Configuration
 public class DataSourceConfiguration {
@@ -15,16 +16,16 @@ public class DataSourceConfiguration {
 	private String username;
 	@Value("${jdbc.password}")
 	private String password;
-//	@Value("${jdbc.maxActive}")
-//	private int maxActive;
-//	@Value("${jdbc.maxIdel}")
-//	private int maxIdel;
-//	@Value("${jdbc.maxWait}")
-//	private long maxWait;
-
+////	@Value("${jdbc.maxActive}")
+////	private int maxActive;
+////	@Value("${jdbc.maxIdel}")
+////	private int maxIdel;
+////	@Value("${jdbc.maxWait}")
+////	private long maxWait;
+//
 	@Bean
-	public BasicDataSource dataSource() {
-		BasicDataSource dataSource = new BasicDataSource();
+	public DriverManagerDataSource dataSource() {
+		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName(driver);
 		dataSource.setUrl(url);
 		dataSource.setUsername(username);
@@ -32,8 +33,8 @@ public class DataSourceConfiguration {
 //		dataSource.setMaxActive(maxActive);
 //		dataSource.setMaxIdle(maxIdel);
 //		dataSource.setMaxWait(maxWait);
-		dataSource.setValidationQuery("SELECT 1");
-		dataSource.setTestOnBorrow(true);
+//		dataSource.setValidationQuery("SELECT 1");
+//		dataSource.setTestOnBorrow(true);
 		return dataSource;
 	}
 }
