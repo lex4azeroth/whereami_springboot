@@ -11,8 +11,9 @@ jdbc:
     password: root  
 
 mybatis: 
-  mapperLocations: classpath:mapper/*.xml
-  typeAliasesPackage: com.almond.way.server.model
+	mapperLocations: classpath:/static/mapping/*.xml
+#  mapperLocations: classpath:mapper/*.xml
+ # typeAliasesPackage: com.almond.way.server.model
   
 #mapper:
 #    mappers:

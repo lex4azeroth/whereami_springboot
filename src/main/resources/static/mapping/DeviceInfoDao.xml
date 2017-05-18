@@ -10,6 +10,7 @@
     <result column="owner" property="owner"/>    
 </resultMap>  -->
 
+
 <select id="getDeviceInfo" parameterType="com.almond.way.server.model.DeviceInfo" resultType="com.almond.way.server.model.DeviceInfo">  
     SELECT * FROM WAY_LAL WHERE EQU_ID=#{androidID} AND TIMESTAMP=#{dateTime}  
 </select>
