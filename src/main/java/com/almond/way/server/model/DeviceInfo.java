@@ -42,7 +42,7 @@ public class DeviceInfo implements Serializable {
 	}
 	
 	public String getDate() {
-		return dateTime;
+		return dateTime.substring(0, dateTime.length() - 2);
 	}
 	
 	public void setDate(String dateTime) {

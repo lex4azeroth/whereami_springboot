@@ -10,10 +10,10 @@ jdbc:
     username: root  
     password: root  
 
-mybatis: 
-	mapperLocations: classpath:/static/mapping/*.xml
+#mybatis: 
+#	mapperLocations: classpath:/static/mapping/*.xml
 #  mapperLocations: classpath:mapper/*.xml
- # typeAliasesPackage: com.almond.way.server.model
+# typeAliasesPackage: com.almond.way.server.model
   
 #mapper:
 #    mappers:

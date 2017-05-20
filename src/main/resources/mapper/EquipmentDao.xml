@@ -2,12 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="com.almond.way.server.dao.EquipmentDao">  
-<insert id="registDevice" parameterType="com.almond.way.server.model.Equipment" flushCache="true">  
+<insert id="registDevice" parameterType="com.almond.way.server.model.Equipment">  
    INSERT INTO WAY_EQU (EQU_ID,EQU_NAME) VALUES (#{equipmentId},#{equipmentName})  
 </insert>
-<select id="getDeviceList" resultType="com.almond.way.server.model.Equipment" parameterType="HashMap">  
-    SELECT * FROM WAY_EQU
-</select> 
+
+<select id="getDeviceList" resultType="com.almond.way.server.model.Equipment">  
+    SELECT ID as ID, EQU_ID as EQUIPMENTID, EQU_NAME as EQUIPMENTNAME FROM WAY_EQU
+</select>
+
+<select id="getDevice" resultType="com.almond.way.server.model.Equipment" parameterType="String">  
+    SELECT ID as ID, EQU_ID as EQUIPMENTID, EQU_NAME as EQUIPMENTNAME FROM WAY_EQU WHERE EQU_ID=#{equipmentId}
+</select>
+
+<delete id="deleteDevice" parameterType="int">  
+    DELETE FROM WAY_EQU WHERE id=#{id}  
+</delete>
 <!-- <update id="updateUser" parameterType="com.springMyBatis.system.model.User">  
     UPDATE user SET password=#{password} WHERE id=#{id}  
 </update>  

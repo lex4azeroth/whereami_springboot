@@ -6,8 +6,6 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.almond.way.server.dao.DeviceInfoDao;
@@ -20,8 +18,6 @@ import com.almond.way.server.utils.LaLUtil;
 @Service
 public class DeviceInfoServiceImpl implements DeviceInfoService {
 
-//	@Autowired
-//	@Qualifier("DeviceInfoDao")
 	@Resource
 	private DeviceInfoDao deviceInfoDao;
 	
