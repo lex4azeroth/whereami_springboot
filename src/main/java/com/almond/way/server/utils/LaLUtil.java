@@ -2,24 +2,35 @@ package com.almond.way.server.utils;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.util.ResourceUtils;
+
+import com.almond.way.server.exception.WhereAmIException;
+import com.almond.way.server.model.DeviceLoL;
 import com.almond.way.server.model.LaL;
 import com.almond.way.server.model.Line;
-
-import sun.swing.StringUIClientPropertyKey;
 
 public class LaLUtil {
 
 	private static final String COMMA = ",";
 	private static final String LINE_PREFIX = "LINE_";
+	
+	protected static final String LAL_PROPERTIES_NOT_FOUND = "lals.properties not found";
+	protected static final String NO_MORE_LINES = "No more lines for line number [%d]";
 
+	public static DeviceLoL makeMockLoL(int id, double latitude, double longitude) {
+		DeviceLoL mockLoL = new DeviceLoL();
+		mockLoL.setId(id);
+		mockLoL.setLongitude(String.valueOf(longitude));
+		mockLoL.setLatitude(String.valueOf(latitude));
+		return mockLoL;
+	}
+	
 	public static double getDistance(LaL from, LaL to) {
 		double R = 6378137;
 		double latFrom = from.getLatitude() * Math.PI / 180.0;
@@ -83,7 +94,34 @@ public class LaLUtil {
 
 	}
 
-	public static List<LaL> getLalPoints() {
-		return null;
+	public static List<LaL> getLalPoints(int lineNum) {
+		List<Line> lines = null;
+		try {
+			lines = readLines(ResourceUtils.getFile("classpath:static/lals.properties"));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			throw new WhereAmIException(LAL_PROPERTIES_NOT_FOUND, e);
+		}
+		
+		if (lineNum > lines.size()) {
+			throw new WhereAmIException(String.format(NO_MORE_LINES, lineNum));
+		}
+		
+		List<LaL> lals = new ArrayList<>();
+		if (lineNum == lines.size()) {
+			lals.addAll(lines.get(lines.size() - 1).getLals());
+			return lals;
+		} else if (lineNum == 1) {
+			lals.addAll(lines.get(0).getLals());
+			return lals;
+		} else {
+			Line north = lines.get(lineNum - 1);
+			Line south = lines.get(lineNum - 2);
+			
+			lals.addAll(north.getLals());
+			lals.addAll(south.getLals());
+			
+			return lals;
+		}
 	}
 }

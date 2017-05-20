@@ -15,7 +15,7 @@ import com.almond.way.server.model.Line;
 
 public class LaLUtilTest {
 
-	private static final String LALS_FILE = "lals.properties";
+	private static final String LALS_FILE = "mock.lals.properties";
 
 	@Test
 	public void testGetDistance() {
@@ -55,6 +55,11 @@ public class LaLUtilTest {
 		assertEquals("LINE_26", lines.get(2).getName());
 		lal = new LaL(121.11,34.55);
 		assertEquals(lal, lines.get(2).getLals().get(0));
+		
+		File fileToTest = new File(LALS_FILE);
+		if (fileToTest.exists()) {
+			fileToTest.delete();
+		}
 		
 	}
 
