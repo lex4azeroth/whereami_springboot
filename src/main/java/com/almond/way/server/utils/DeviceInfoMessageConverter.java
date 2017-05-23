@@ -9,9 +9,7 @@ import javax.jms.Session;
 
 import org.springframework.jms.support.converter.MessageConversionException;
 import org.springframework.jms.support.converter.MessageConverter;
-import org.springframework.stereotype.Component;
 
-@Component
 public class DeviceInfoMessageConverter implements MessageConverter {
 
 	@Override

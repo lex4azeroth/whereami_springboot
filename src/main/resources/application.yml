@@ -28,7 +28,12 @@ spring:
         encoding.charset: UTF-8  
         encoding.enable: true  
         encoding.force: true
-        
+#    activemq:
+#        broker-url: tcp://localhost:61616
+#        packages:
+#            trust-all: true
+        #trustedPackages: com.almond.way.server.model
+        #packages.trusted: com.almond.way.server.model.DeviceInfo
         
 # LOGGING  
 logging:  

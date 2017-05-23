@@ -4,12 +4,14 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import com.almond.way.server.dao.DeviceInfoDao;
 import com.almond.way.server.model.DeviceInfo;
 import com.almond.way.server.service.DataProcessorService;
 import com.almond.way.server.service.EquipmentService;
 
+@Service
 public class DataProcessorServiceImpl implements DataProcessorService {
 
 	@Resource
