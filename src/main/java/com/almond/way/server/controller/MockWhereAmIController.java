@@ -35,4 +35,10 @@ private static Logger logger = Logger.getLogger(MockWhereAmIController.class.get
 		
 		return String.format("%d records POSTED", index);
 	}
+	
+	@RequestMapping(value="/mockihavebeen", method=RequestMethod.GET, consumes=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public String mockIhavebeen() {
+		return null;
+	}
 }
