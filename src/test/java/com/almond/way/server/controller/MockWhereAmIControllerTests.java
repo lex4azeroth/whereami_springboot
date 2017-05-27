@@ -41,15 +41,15 @@ public class MockWhereAmIControllerTests {
 	public void setUp() throws Exception {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}
-	
-	@Test  
-    public void testMocHomeSweetHome() throws Exception {  
-        MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.get( "/way/mockhome" );  
-      
-        ResultActions resultActions = mockMvc.perform( mockHttpServletRequestBuilder );  
-        resultActions.andExpect(status().isOk()).andReturn().getResponse().getContentAsString().equals("index");
-    }
-	
+
+	@Test
+	public void testMocHomeSweetHome() throws Exception {
+		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.get("/way/mockhome");
+
+		ResultActions resultActions = mockMvc.perform(mockHttpServletRequestBuilder);
+		resultActions.andExpect(status().isOk()).andReturn().getResponse().getContentAsString().equals("index");
+	}
+
 	@Test
 	public void testMockPost() throws Exception {
 		List<DeviceInfo> deviceInfos = new ArrayList<>();
@@ -60,23 +60,36 @@ public class MockWhereAmIControllerTests {
 		di.setLatitude("lat1");
 		di.setLongitude("lon1");
 		deviceInfos.add(di);
-		
+
 		di.setId(567);
 		di.setAndroidID("aid567");
 		di.setDate("now2");
 		di.setLatitude("lat2");
 		di.setLongitude("lon2");
 		deviceInfos.add(di);
-		
-        JSONArray json = new JSONArray();  
-        json.addAll(deviceInfos);
-        
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
-        String requestJson = ow.writeValueAsString(deviceInfos);
-        String responseString = mockMvc.perform( post("/way/mockpost").contentType(MediaType.APPLICATION_JSON).content(requestJson))
-                .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-        
-        assertEquals(responseString, "2 records POSTED");
+
+		JSONArray json = new JSONArray();
+		json.addAll(deviceInfos);
+
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
+		String requestJson = ow.writeValueAsString(deviceInfos);
+		String responseString = mockMvc
+				.perform(post("/way/mockpost").contentType(MediaType.APPLICATION_JSON).content(requestJson))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+
+		assertEquals(responseString, "2 records POSTED");
+	}
+
+	@Test
+	public void testMock() throws Exception {
+		String value = mockMvc.perform(get("/way/mocktest/canyouseeme").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+		assertEquals("canyouseeme", value);
+	}
+	
+	@Test
+	public void testMockIhaveBeen() throws Exception {
+		String value = mockMvc.perform(get("/way/mockihavebeen/honorv8/yesterday/today/2").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+		assertEquals("honorv8yesterdaytoday2", value);
 	}
 }

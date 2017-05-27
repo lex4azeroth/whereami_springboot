@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,7 +27,6 @@ private static Logger logger = Logger.getLogger(MockWhereAmIController.class.get
 	@RequestMapping(value="/mockpost", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public String mockPost(@RequestBody List<DeviceInfo> deviceInfos) {
-		logger.info("[MOCK POST]");
 		int index = 0;
 		for (; index < deviceInfos.size(); index++) {
 			logger.info(String.format("Lat[%s]", deviceInfos.get(index).getLatitude()));
@@ -36,9 +36,21 @@ private static Logger logger = Logger.getLogger(MockWhereAmIController.class.get
 		return String.format("%d records POSTED", index);
 	}
 	
-	@RequestMapping(value="/mockihavebeen", method=RequestMethod.GET, consumes=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/mockihavebeen/{equid}/{from}/{to}/{line}", method=RequestMethod.GET, consumes=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public String mockIhavebeen() {
-		return null;
+	public String mockIhavebeen(
+			@PathVariable("equid") String id, 
+			@PathVariable("from") String from, 
+			@PathVariable("to") String to, 
+			@PathVariable("line") int line) {
+		StringBuilder requestBuilder = new StringBuilder();
+		requestBuilder.append(id).append(from).append(to).append(line);
+		return requestBuilder.toString();
+	}
+	
+	@RequestMapping(value="/mocktest/{id}", method=RequestMethod.GET, consumes=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public String mockTest(@PathVariable("id") String id) {
+		return id;
 	}
 }
