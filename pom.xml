@@ -6,7 +6,7 @@
 	<groupId>com.almond.way</groupId>
 	<artifactId>server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>server</name>
 	<description>Demo project for Spring Boot</description>
@@ -36,8 +36,22 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			    <exclusions>
+<!-- 			        <exclusion>
+			            <artifactId>log4j-over-slf4j</artifactId>
+			            <groupId>org.slf4j</groupId>
+			        </exclusion> -->
+			        <exclusion>
+			            <groupId>org.springframework.boot</groupId>
+			            <artifactId>spring-boot-starter-tomcat</artifactId>
+			        </exclusion>
+    			</exclusions>
 		</dependency>
-
+			<dependency>
+			    <groupId>org.springframework.boot</groupId>
+			    <artifactId>spring-boot-starter-tomcat</artifactId>
+			    <scope>provided</scope>
+			</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -82,6 +96,23 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+		        <groupId>org.apache.maven.plugins</groupId>  
+		        <artifactId>maven-dependency-plugin</artifactId>
+		        <version>2.8</version>  
+		        <executions>  
+		            <execution>  
+		                <phase>package</phase>  
+		                <goals>  
+		                    <goal>copy-dependencies</goal>  
+		                </goals>  
+		            </execution>  
+		        </executions>  
+		        <configuration>  
+		            <includeScope>compile</includeScope>
+		            <outputDirectory>${CATALINA_HOME}/shared/lib</outputDirectory>
+		        </configuration>  
+      		</plugin>
 		</plugins>
 	</build>
 

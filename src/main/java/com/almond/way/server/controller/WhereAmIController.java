@@ -22,7 +22,7 @@ import com.almond.way.server.service.EquipmentService;
 import com.almond.way.server.service.PublisherService;
 
 @Controller
-@RequestMapping("/way")
+@RequestMapping()
 public class WhereAmIController {
 	private static Logger logger = Logger.getLogger(WhereAmIController.class.getName());
 	
@@ -60,14 +60,27 @@ public class WhereAmIController {
 		return equipmentService.getEquipmentList();
 	}
 	
-	@RequestMapping(value="/ihavebeen/{equid}/{from}/{to}/{line}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="ihavebeen/{equid}/{from}/{to}/{line}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<DeviceLoL> getDeviceLals(
 			@PathVariable("equid") String equid, 
 			@PathVariable("from") String from, 
 			@PathVariable("to") String to, 
-			@PathVariable("line") int line) {
+			@PathVariable("line") String line) {
 		logger.info("i have been...");
-		return deviceInfoService.getDeviceLalInfo(equid, from, to, line);
+		int lineNum = Integer.parseInt(line);
+		return deviceInfoService.getDeviceLalInfo(equid, from, to, lineNum);
+	}
+	
+	@RequestMapping(value="ihavebeenoriginal/{equid}/{from}/{to}/{line}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<DeviceLoL> getDeviceOriginalLals(
+			@PathVariable("equid") String equid, 
+			@PathVariable("from") String from, 
+			@PathVariable("to") String to, 
+			@PathVariable("line") String line) {
+		logger.info("i have been...");
+		int lineNum = Integer.parseInt(line);
+		return deviceInfoService.getDeviceOriginalLalInfo(equid, from, to, lineNum);
 	}
 }

@@ -11,6 +11,11 @@ public class GPSUtil {
 		return gcj_decrypt(tmp.getLatitude(), tmp.getLongitude());
 	}
 	
+	public static LaL WGS2BD(double lat, double lon) {
+		LaL tmp = gcj_encrypt(lat, lon);
+		return bd_encrypt(tmp.getLatitude(), tmp.getLongitude());
+	}
+	
 	private static LaL getDelta(double lat, double lon) {
         // Krasovsky 1940
         //

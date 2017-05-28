@@ -191,6 +191,47 @@ marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
 map.addOverlay(marker); 
 }
 
+function showRouteWithLol(lols) {
+	var clon = parseFloat(lols[0].longitude);
+	var clat = parseFloat(lols[0].latitude);
+//
+//	//WGS-84 to GCJ-02
+//	var att1 = GPS.gcj_encrypt(clat, clon);
+//
+//	//GCJ-02 to BD-09
+//	var cbd = GPS.bd_encrypt(att1['lat'], att1['lon']);
+
+	var map = new BMap.Map("container",{mapType: BMAP_SATELLITE_MAP});      //设置卫星图为底图
+	var point = new BMap.Point(clon, clat);    // 创建点坐标
+	map.centerAndZoom(point, 18);                     // 初始化地图,设置中心点坐标和地图级别。
+	map.addControl(new BMap.NavigationControl());
+	map.enableScrollWheelZoom();                  // 启用滚轮放大缩小。
+	// map.enableKeyboard();                         // 启用键盘操作。  
+	// map.setCurrentCity("北京");          // 设置地图显示的城市 此项是必须设置的
+	var marker = new BMap.Marker(point);
+	// map.addOverlay(marker);               // 将标注添加到地图中
+	marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+	map.addOverlay(marker); 
+
+	var polyLine = new Array();
+
+	for (var i = 0; i < lols.length - 1; i++) {
+	    var lon = parseFloat(lols[i].longitude);
+	    var lat = parseFloat(lols[i].latitude);
+
+//	    //WGS-84 to GCJ-02
+//	    var att1 = GPS.gcj_encrypt(lat, lon);
+//
+//	    //GCJ-02 to BD-09
+//	    var bd = GPS.bd_encrypt(att1['lat'], att1['lon']);
+
+	    polyLine.push(new BMap.Point(lon, lat));
+	}
+
+	var polyline = new BMap.Polyline(polyLine, {strokeColor:"red", strokeWeight:1, strokeOpacity:0.5});
+	map.addOverlay(polyline);
+	}
+
 function showMapWithLol(lols) {
 var clon = parseFloat(lols[0].longitude);
 var clat = parseFloat(lols[0].latitude);
@@ -203,16 +244,7 @@ var cbd = GPS.bd_encrypt(att1['lat'], att1['lon']);
 
 var map = new BMap.Map("container",{mapType: BMAP_SATELLITE_MAP});      //设置卫星图为底图
 var point = new BMap.Point(cbd['lon'], cbd['lat']);    // 创建点坐标
-// var point = new BMap.Point(clon, clat);
-// var point = new BMap.Point(att1['lon'], att1['lat']);
 map.centerAndZoom(point, 18);                     // 初始化地图,设置中心点坐标和地图级别。
-
-//var startpoint = new BMap.Point(121.329492, 31.284172);
-//var endpoint = new BMap.Point(121.321731,31.283431);
-//var walking = new BMap.WalkingRoute(map, {renderOptions:{map: map, autoViewport: true}});
-//walking.search(startpoint, endpoint);
-
-// map.addControl(new BMap.MapTypeControl());
 map.addControl(new BMap.NavigationControl());
 map.enableScrollWheelZoom();                  // 启用滚轮放大缩小。
 // map.enableKeyboard();                         // 启用键盘操作。  
@@ -233,42 +265,12 @@ for (var i = 0; i < lols.length - 1; i++) {
 
     //GCJ-02 to BD-09
     var bd = GPS.bd_encrypt(att1['lat'], att1['lon']);
-    // var fixedLon = bd['lon'].toFixed(3);
-    // var fixedLat = bd['lat'].toFixed(5);
-    // polyLine.push(new BMap.Point(fixedLon, fixedLat));
+
     polyLine.push(new BMap.Point(bd['lon'], bd['lat']));
-
-    // polyLine.push(new BMap.Point(lols[i].longitude, lols[i].latitude));
-
 }
 
 var polyline = new BMap.Polyline(polyLine, {strokeColor:"red", strokeWeight:1, strokeOpacity:0.5});
 map.addOverlay(polyline);
-
-//     var lon = parseFloat(lols[0].longitude);
-//     var lat = parseFloat(lols[0].latitude);
-
-//     //WGS-84 to GCJ-02
-//     var att1 = GPS.gcj_encrypt(lat, lon);
-
-//     //GCJ-02 to BD-09
-//     var bd = GPS.bd_encrypt(att1['lat'], att1['lon']);
-//     var pointA = new BMap.Point(bd['lon'], bd['lat']);
-
-//     lon = parseFloat(lols[lols.length - 1].longitude);
-//     lat = parseFloat(lols[lols.length - 1].latitude);
-
-//     //WGS-84 to GCJ-02
-//     att1 = GPS.gcj_encrypt(lat, lon);
-
-//     //GCJ-02 to BD-09
-//     bd = GPS.bd_encrypt(att1['lat'], att1['lon']);
-//     var pointB = new BMap.Point(bd['lon'], bd['lat']);
-
-//     // var walking = new BMap.WalkingRoute(map, {renderOptions:{map: map, autoViewport: true}});
-//     // walking.search(startpoint, endpoint);
-// var polyline = new BMap.Polyline([pointA,pointB], {strokeColor:"blue", strokeWeight:1, strokeOpacity:0.5});
-// map.addOverlay(polyline);
 }
 
 function postData() {
@@ -355,6 +357,39 @@ var lols = new Array();
 		}
 	});
 }
+
+function whereami() {
+	var lols = new Array();
+	    $.ajax({
+			type: "GET",
+			url: "ihavebeen/7bbd793805f2ba1d/2017-04-08 04:51/2017-04-08 04:58/5",
+	        // data:JSON.stringify(jsondata),
+			async: true,
+			contentType: "application/json",
+	        cache:false,
+			success: function(data) {
+	            lols = data;
+	            showMapWithLol(data);
+				// alert(data);
+			}
+		});
+	}
+
+function whereamioriginal() {
+	var lols = new Array();
+	    $.ajax({
+			type: "GET",
+			url: "ihavebeenoriginal/7bbd793805f2ba1d/2017-04-08 04:51/2017-04-08 04:58/5",
+	        // data:JSON.stringify(jsondata),
+			async: true,
+			contentType: "application/json",
+	        cache:false,
+			success: function(data) {
+	            lols = data;
+	            showRouteWithLol(data);
+			}
+		});
+	}
 
 function decode() {
     var lons = new Array(); 

@@ -6,4 +6,6 @@ import com.almond.way.server.model.DeviceLoL;
 
 public interface DeviceInfoService {
 	List<DeviceLoL> getDeviceLalInfo(String deviceId, String from, String to, int lineNum);
+	
+	List<DeviceLoL> getDeviceOriginalLalInfo(String deviceId, String from, String to, int lineNum);
 }

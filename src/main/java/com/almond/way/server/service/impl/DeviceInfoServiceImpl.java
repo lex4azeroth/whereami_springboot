@@ -14,6 +14,7 @@ import com.almond.way.server.model.DeviceLoL;
 import com.almond.way.server.model.LaL;
 import com.almond.way.server.service.DeviceInfoService;
 import com.almond.way.server.service.impl.DeviceInfoServiceImpl;
+import com.almond.way.server.utils.GPSUtil;
 import com.almond.way.server.utils.LaLUtil;
 
 @Service
@@ -37,7 +38,7 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
 		logger.info(String.format(deviceLog, deviceId, from, to));
 		
 		List<DeviceLoL> queriedLoL = deviceInfoDao.getDeviceLaL(deviceId, from, to);
-		if (queriedLoL == null) {
+		if (queriedLoL == null || queriedLoL.isEmpty()) {
 			logger.error(NO_THING_FOUND);
 			throw new WhereAmIException(NO_THING_FOUND);
 		}
@@ -45,12 +46,36 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
 		return filterDeviceLal(queriedLoL, lineNum);
 	}
 	
+	@Override
+	public List<DeviceLoL> getDeviceOriginalLalInfo(String deviceId, String from, String to, int lineNum) {
+		logger.info(String.format(deviceLog, deviceId, from, to));
+		
+		List<DeviceLoL> queriedLoL = deviceInfoDao.getDeviceLaL(deviceId, from, to);
+		if (queriedLoL == null || queriedLoL.isEmpty()) {
+			logger.error(NO_THING_FOUND);
+			throw new WhereAmIException(NO_THING_FOUND);
+		}
+		
+		List<DeviceLoL> convertedLoL = new ArrayList<DeviceLoL>();
+		for (DeviceLoL lol : queriedLoL) {
+			LaL lal = GPSUtil.WGS2BD(Double.valueOf(lol.getLatitude()), Double.valueOf(lol.getLongitude()));
+			DeviceLoL dLoL = new DeviceLoL();
+			dLoL.setId(lol.getId());
+			dLoL.setLatitude(String.valueOf(lal.getLatitude()));
+			dLoL.setLongitude(String.valueOf(lal.getLongitude()));
+			convertedLoL.add(dLoL);
+		}
+
+		return convertedLoL;
+	}
+	
 	List<DeviceLoL> filterDeviceLal(List<DeviceLoL> lolListToFilter, int lineNum) {
 		logger.info("queried size [" + lolListToFilter.size() + "]");
 		List<LaL> lalPoints = LaLUtil.getLalPoints(lineNum);
 		List<DeviceLoL> resultMap = new ArrayList<DeviceLoL>();
 		for (DeviceLoL dlol : lolListToFilter) {
-			LaL target = new LaL(Double.valueOf(dlol.getLongitude()), Double.valueOf(dlol.getLatitude()));
+//			LaL target = new LaL(Double.valueOf(dlol.getLongitude()), Double.valueOf(dlol.getLatitude()));
+			LaL target = GPSUtil.WGS2BD(Double.valueOf(dlol.getLatitude()), Double.valueOf(dlol.getLongitude()));
 			for (int index = 0; index < lalPoints.size(); index++) {
 				double distance = LaLUtil.getDistance(target, lalPoints.get(index));
 				if (distance <= 10d) {

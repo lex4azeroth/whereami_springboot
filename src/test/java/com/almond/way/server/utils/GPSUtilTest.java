@@ -21,5 +21,4 @@ public class GPSUtilTest {
 		LaL expectedWGS = new LaL(121.31256018996311, 31.279614976933726);
 		assertNotEquals(expectedWGS, actualWGS);
 	}
-
 }
