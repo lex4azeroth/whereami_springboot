@@ -2,7 +2,8 @@ package com.almond.way.server.controller;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
@@ -24,7 +25,8 @@ import com.almond.way.server.service.PublisherService;
 @Controller
 @RequestMapping()
 public class WhereAmIController {
-	private static Logger logger = Logger.getLogger(WhereAmIController.class.getName());
+//	private static Logger logger = Logger.getLogger(WhereAmIController.class.getName());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	@Qualifier("publisherServiceImpl")

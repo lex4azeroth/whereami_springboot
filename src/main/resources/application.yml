@@ -36,8 +36,10 @@ spring:
         #packages.trusted: com.almond.way.server.model.DeviceInfo
         
 # LOGGING  
-logging:  
+logging:
+    file: ../logs/waylog.log
+    root: INFO
     level:  
-       com.ibatis:DEBUG  
+       com.ibatis:DEBUG
   
  
