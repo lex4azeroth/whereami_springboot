@@ -38,7 +38,7 @@ public class WhereAmIController {
 	@Qualifier("equipmentServiceImpl")
 	private EquipmentService equipmentService;
 	
-	@RequestMapping(value="/mylocation", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE) 
+	@RequestMapping(value="mylocation", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE) 
     @ResponseBody
 	public String postDeviceLocation(@RequestBody List<DeviceInfo> deviceInfos) {
 		logger.info("postDeviceLocation...");
@@ -53,7 +53,8 @@ public class WhereAmIController {
 		return returnValue;
 	}
 	
-	@RequestMapping(value="/equipments", method=RequestMethod.GET, consumes=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="equipments", method=RequestMethod.GET, consumes=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
 	public List<Equipment> getEquipmentList() {
 		logger.info("getting equipment list...");
 

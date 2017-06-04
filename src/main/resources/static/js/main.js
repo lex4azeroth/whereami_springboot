@@ -2,38 +2,7 @@ function showMap() {
 var map = new BMap.Map("container",{mapType: BMAP_SATELLITE_MAP});      //设置卫星图为底图
 var point = new BMap.Point(121.323258,31.284051);    // 创建点坐标
 map.centerAndZoom(point, 19);                     // 初始化地图,设置中心点坐标和地图级别。
-
-var polyline = new BMap.Polyline([
-//   new BMap.Point(121.329492,31.284172),
-//   new BMap.Point(121.326043,31.285406),
-//   new BMap.Point(121.320725,31.286394),
-//   new BMap.Point(121.315478,31.288245),
-//   new BMap.Point(121.30592,31.288863),
-//   new BMap.Point(121.308867,31.28627),
-//   new BMap.Point(121.315478,31.284851),
-//   new BMap.Point(121.321443,31.282691),
-//   new BMap.Point(121.331504,31.280839)
-
-  new BMap.Point(121.323258,31.284051),
-  new BMap.Point(121.323456,31.284008),
-  new BMap.Point(121.323707,31.283958),
-  new BMap.Point(121.323856,31.283939),
-  new BMap.Point(121.324035,31.2839),
-  new BMap.Point(121.324309,31.28385)
-], {strokeColor:"red", strokeWeight:1, strokeOpacity:0.5});
-map.addOverlay(polyline);
-
-// map.addControl(new BMap.MapTypeControl());
 map.addControl(new BMap.NavigationControl());
-// map.addControl(new BMap.ScaleControl());
-// map.addControl(new BMap.OverviewMapControl());    
-// map.enableScrollWheelZoom();                  // 启用滚轮放大缩小。
-//map.enableKeyboard();                         // 启用键盘操作。  
-// map.setCurrentCity("北京");          // 设置地图显示的城市 此项是必须设置的
-var marker = new BMap.Marker(point);
-map.addOverlay(marker);               // 将标注添加到地图中
-marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
-map.addOverlay(marker); 
 }
 
 function showRouteWithLol(lols) {
@@ -283,6 +252,35 @@ function getLineNum() {
 	return lineNum;
 }
 
+function showDeviceList() {
+	var devices = new Array();
+    $.ajax({
+		type: "GET",
+        url: "equipments",
+		async: true,
+		contentType: "application/json",
+        cache:false,
+		success: function(data) {
+			devices = data;
+		    for (var index = 0; index < devices.length; index++) {
+		    	var li = document.createElement('li');
+		    	var id = devices[index].equipmentId;
+		    	li.setAttribute('class', 'device');
+		    	li.setAttribute('id', id);
+		    	li.innerHTML = id;
+		    	li.onclick = deviceChoosen;
+		        $('#Content-Left').append(li);
+		    }
+		}
+	});
+}
+
+function deviceChoosen() {
+	currentDeviceId = this.id;
+	$('#currentDevice').text("当前设备：" + currentDeviceId);
+	showMap();
+}
+
 function cleanValidators() {
 	$('#fromValidator').text("");
 	$('#endValidator').text("");
@@ -290,9 +288,13 @@ function cleanValidators() {
 }
 	
 $(document).ready(function() {
+		showDeviceList();
+		
 		$('#fromDate').val(moment().format('YYYY-MM-DD'));
 		$('#endDate').val(moment().format('YYYY-MM-DD'));
 		$('#fromTime').val(moment().format('hh:mm:ss'));
 		$('#endTime').val(moment().format('hh:mm:ss'));
 		$('#lineNum').val(1);
 	});
+
+var currentDeviceId;
