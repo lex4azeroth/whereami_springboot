@@ -1,15 +1,19 @@
-# Server settings  
-server:  
-    port:8080  
-    address:localhost  
-  
-# DATASOURCE  
-jdbc:  
-    driver: com.mysql.jdbc.Driver  
-    url: jdbc:mysql://127.0.0.1:3306/way?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false  
-    username: root  
-    password: root  
+spring:
+    profiles:
+        active: dev
 
+# Server settings  
+#server:  
+#    port:8080  
+#    address:localhost  
+  
+# DATASOURCE - MYSQL
+#jdbc:  
+#    driver: com.mysql.jdbc.Driver  
+#    url: jdbc:mysql://127.0.0.1:3306/way?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false  
+#    username: root  
+#    password: root  
+    
 #mybatis: 
 #	mapperLocations: classpath:/static/mapping/*.xml
 #  mapperLocations: classpath:mapper/*.xml
@@ -38,7 +42,7 @@ spring:
 # LOGGING  
 logging:
     file: ../logs/waylog.log
-    root: INFO
+    root: DEBUG
     level:  
        com.ibatis:DEBUG
   
