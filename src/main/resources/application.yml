@@ -38,10 +38,10 @@ spring:
     profiles:
         active: dev    
 # LOGGING  
-logging:
-    file: ../logs/waylog.log
-    root: DEBUG
-    level:  
-       com.ibatis:DEBUG
+#logging:
+#    file: ../logs/waylog.log
+#    root: DEBUG
+#    level:  
+#       com.ibatis:DEBUG
   
  
