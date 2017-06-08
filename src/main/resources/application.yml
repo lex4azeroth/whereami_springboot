@@ -1,7 +1,3 @@
-spring:
-    profiles:
-        active: dev
-
 # Server settings  
 #server:  
 #    port:8080  
@@ -38,7 +34,9 @@ spring:
 #            trust-all: true
         #trustedPackages: com.almond.way.server.model
         #packages.trusted: com.almond.way.server.model.DeviceInfo
-        
+    
+    profiles:
+        active: dev    
 # LOGGING  
 logging:
     file: ../logs/waylog.log

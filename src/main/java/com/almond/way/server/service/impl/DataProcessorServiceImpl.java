@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.almond.way.server.dao.DeviceInfoDao;
 import com.almond.way.server.model.DeviceInfo;
+import com.almond.way.server.model.Equipment;
 import com.almond.way.server.service.DataProcessorService;
 import com.almond.way.server.service.EquipmentService;
 
@@ -29,13 +30,13 @@ public class DataProcessorServiceImpl implements DataProcessorService {
 
 	@Override
 	public void processDeviceLocation(DeviceInfo deviceInfo) {
-//		if (!equipmentService.isEquipmentRegisted(deviceInfo.getAndroidID())) {
-//			Equipment equ = new Equipment();
-//			equ.setEquipmentId(deviceInfo.getAndroidID());
-//			String defaultName = String.format("default_name_%s", deviceInfo.getAndroidID());
-//			equ.setEquipmentName(defaultName);
-//			equipmentService.registEquipment(equ);
-//		}
+		if (!equipmentService.isEquipmentRegisted(deviceInfo.getAndroidID())) {
+			Equipment equ = new Equipment();
+			equ.setEquipmentId(deviceInfo.getAndroidID());
+			String defaultName = String.format("default_name_%s", deviceInfo.getAndroidID());
+			equ.setEquipmentName(defaultName);
+			equipmentService.registEquipment(equ);
+		}
 		
 		deviceInfoDao.addDeviceInfo(deviceInfo);
 	}
