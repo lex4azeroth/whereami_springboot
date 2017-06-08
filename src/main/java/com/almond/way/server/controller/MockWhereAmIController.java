@@ -2,7 +2,8 @@ package com.almond.way.server.controller;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +18,7 @@ import com.almond.way.server.controller.MockWhereAmIController;
 @Controller
 @RequestMapping("/way")
 public class MockWhereAmIController {
-private static Logger logger = Logger.getLogger(MockWhereAmIController.class.getName());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@RequestMapping(value="/mockhome")
 	public String mocHomeSweetHome() {

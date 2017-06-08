@@ -25,7 +25,6 @@ import com.almond.way.server.service.PublisherService;
 @Controller
 @RequestMapping()
 public class WhereAmIController {
-//	private static Logger logger = Logger.getLogger(WhereAmIController.class.getName());
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired

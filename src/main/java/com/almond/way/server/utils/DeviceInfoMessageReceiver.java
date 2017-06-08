@@ -4,7 +4,8 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.ObjectMessage;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jms.annotation.JmsListener;
@@ -17,7 +18,7 @@ import com.almond.way.server.service.DataProcessorService;
 @Component
 public class DeviceInfoMessageReceiver {
 
-	private static Logger logger = Logger.getLogger(DeviceInfoMessageReceiver.class.getName());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	@Qualifier("dataProcessorServiceImpl")

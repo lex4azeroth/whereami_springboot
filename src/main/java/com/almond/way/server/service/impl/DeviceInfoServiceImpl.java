@@ -5,7 +5,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.almond.way.server.dao.DeviceInfoDao;
@@ -19,11 +20,10 @@ import com.almond.way.server.utils.LaLUtil;
 
 @Service
 public class DeviceInfoServiceImpl implements DeviceInfoService {
-
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	@Resource
 	private DeviceInfoDao deviceInfoDao;
-
-	private static Logger logger = Logger.getLogger(DeviceInfoServiceImpl.class.getName());
 
 	private static String deviceLog = "device id is [%s], from is [%s], to is [%s]";
 	

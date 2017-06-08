@@ -5,19 +5,16 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.ObjectMessage;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.almond.way.server.model.DeviceInfo;
 import com.almond.way.server.service.DataProcessorService;
 
-//import com.almond.way.model.DeviceInfo;
-//import com.almond.way.service.IDataProcessorService;
-//import com.almond.way.utils.QueueMessageListener;
-
 public class QueueMessageListener implements MessageListener {
-	private static Logger logger = Logger.getLogger(QueueMessageListener.class.getName());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	@Qualifier("dataProcessorServiceImpl")

@@ -6,8 +6,6 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-//@MapperScan("com.almond.way.server.dao")
-//public class ServerApplication extends WebMvcConfigurerAdapter {
 public class ServerApplication extends SpringBootServletInitializer {
     @Override
     protected SpringApplicationBuilder configure(
