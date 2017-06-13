@@ -17,7 +17,7 @@ function showRouteWithLol(lols) {
 
 	var map = new BMap.Map("container",{mapType: BMAP_SATELLITE_MAP});      //设置卫星图为底图
 	var point = new BMap.Point(clon, clat);    // 创建点坐标
-	map.centerAndZoom(point, 18);                     // 初始化地图,设置中心点坐标和地图级别。
+	map.centerAndZoom(point, 19);                     // 初始化地图,设置中心点坐标和地图级别。
 	map.addControl(new BMap.NavigationControl());
 	map.enableScrollWheelZoom();                  // 启用滚轮放大缩小。
 	// map.enableKeyboard();                         // 启用键盘操作。  
@@ -42,7 +42,7 @@ function showRouteWithLol(lols) {
 	    polyLine.push(new BMap.Point(lon, lat));
 	}
 
-	var polyline = new BMap.Polyline(polyLine, {strokeColor:"red", strokeWeight:1, strokeOpacity:0.5});
+	var polyline = new BMap.Polyline(polyLine, {strokeColor:"yellow", strokeWeight:1, strokeOpacity:0.9});
 	map.addOverlay(polyline);
 	}
 
@@ -58,7 +58,7 @@ var cbd = GPS.bd_encrypt(att1['lat'], att1['lon']);
 
 var map = new BMap.Map("container",{mapType: BMAP_SATELLITE_MAP});      //设置卫星图为底图
 var point = new BMap.Point(cbd['lon'], cbd['lat']);    // 创建点坐标
-map.centerAndZoom(point, 18);                     // 初始化地图,设置中心点坐标和地图级别。
+map.centerAndZoom(point, 19);                     // 初始化地图,设置中心点坐标和地图级别。
 map.addControl(new BMap.NavigationControl());
 map.enableScrollWheelZoom();                  // 启用滚轮放大缩小。
 // map.enableKeyboard();                         // 启用键盘操作。  
