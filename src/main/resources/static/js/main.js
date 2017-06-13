@@ -143,7 +143,7 @@ function whereami() {
 		return;
 	}
 	
-	var equipmentId = "7bbd793805f2ba1d";
+	var equipmentId = currentDeviceId;
 	var lineNum = getLineNum();
 	if (lineNum == undefined) {
 		return;
@@ -187,7 +187,7 @@ function whereamioriginal() {
 		return;
 	}
 	
-	var equipmentId = "7bbd793805f2ba1d";
+	var equipmentId = currentDeviceId;
 	var lineNum = getLineNum();
 
 	if (lineNum == undefined) {
