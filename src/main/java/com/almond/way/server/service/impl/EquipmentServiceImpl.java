@@ -21,23 +21,30 @@ public class EquipmentServiceImpl implements EquipmentService {
 	@Resource
 	private EquipmentDao equipmentDao;
 	
-	private List<Equipment> equipmentsInCache; 
+//	private List<Equipment> equipmentsInCache;
+	
+	private static final ThreadLocal<List<Equipment>> equipmentsInCacheThreadLocal = new ThreadLocal<List<Equipment>>();
 
 	@Override
 	public synchronized int registEquipment(Equipment equipment) {
 		Objects.requireNonNull(equipment);
 		int id = equipmentDao.registDevice(equipment);
 		equipment.setId(id);
+		List<Equipment> equipmentsInCache = equipmentsInCacheThreadLocal.get();
 		equipmentsInCache.add(equipment);
 		logger.info("Now we have [" + equipmentsInCache.size() + "] equipments in cache.");
+		equipmentsInCacheThreadLocal.set(equipmentsInCache);
 		return id;
 	}
 
 	@Override
-	public synchronized List<Equipment> getEquipmentList() {
+	public List<Equipment> getEquipmentList() {
+		List<Equipment> equipmentsInCache = equipmentsInCacheThreadLocal.get();
+		
 		if (equipmentsInCache == null || equipmentsInCache.isEmpty()) {
 			logger.info("Equipment # in cache is 0");
 			equipmentsInCache = equipmentDao.getDeviceList();
+			equipmentsInCacheThreadLocal.set(equipmentsInCache);
 		}
 		
 		logger.info("After query, Now we have [" + equipmentsInCache.size() + "] equipments in cache.");
