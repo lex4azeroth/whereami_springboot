@@ -2,19 +2,18 @@ package com.almond.way.server.service.impl;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.almond.way.server.dao.DeviceInfoDao;
 import com.almond.way.server.exception.WhereAmIException;
-import com.almond.way.server.model.DeviceLoL;
+import com.almond.way.server.service.DeviceInfoService;
 
 @RunWith(MockitoJUnitRunner.class) 
 public class DeviceInfoServiceImplTest {
@@ -22,14 +21,15 @@ public class DeviceInfoServiceImplTest {
 	@Mock
 	private DeviceInfoDao deviceInfoDao;
 	
-	private DeviceInfoServiceImpl service;
+	@InjectMocks
+	private DeviceInfoService service = new DeviceInfoServiceImpl();
 	
 	private static final String EMPTY = "";
 	
 	@Before
 	public void setup() {
+		MockitoAnnotations.initMocks(this);
 		deviceInfoDao = Mockito.mock(DeviceInfoDao.class);
-		service = new DeviceInfoServiceImpl(deviceInfoDao);
 	}
 	
 	@Test(expected = WhereAmIException.class)

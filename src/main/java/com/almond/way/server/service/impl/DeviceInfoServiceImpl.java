@@ -29,9 +29,9 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
 	
 	static final String NO_THING_FOUND = "No device info found";
 	
-	protected DeviceInfoServiceImpl(DeviceInfoDao deviceInfoDao) {
-		this.deviceInfoDao = deviceInfoDao;
-	}
+//	protected DeviceInfoServiceImpl(DeviceInfoDao deviceInfoDao) {
+//		this.deviceInfoDao = deviceInfoDao;
+//	}
 
 	@Override
 	public List<DeviceLoL> getDeviceLalInfo(String deviceId, String from, String to, int lineNum) {

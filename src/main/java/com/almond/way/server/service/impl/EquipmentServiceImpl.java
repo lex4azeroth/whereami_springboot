@@ -1,5 +1,6 @@
 package com.almond.way.server.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,7 +24,12 @@ public class EquipmentServiceImpl implements EquipmentService {
 	
 //	private List<Equipment> equipmentsInCache;
 	
-	private static final ThreadLocal<List<Equipment>> equipmentsInCacheThreadLocal = new ThreadLocal<List<Equipment>>();
+	private static final ThreadLocal<List<Equipment>> equipmentsInCacheThreadLocal = new ThreadLocal<List<Equipment>>() {
+		@Override
+		protected List<Equipment> initialValue() {
+			return new ArrayList<Equipment>();
+		}
+	};
 
 	@Override
 	public synchronized int registEquipment(Equipment equipment) {
@@ -41,7 +47,7 @@ public class EquipmentServiceImpl implements EquipmentService {
 	public List<Equipment> getEquipmentList() {
 		List<Equipment> equipmentsInCache = equipmentsInCacheThreadLocal.get();
 		
-		if (equipmentsInCache == null || equipmentsInCache.isEmpty()) {
+		if (equipmentsInCache.isEmpty()) {
 			logger.info("Equipment # in cache is 0");
 			equipmentsInCache = equipmentDao.getDeviceList();
 			equipmentsInCacheThreadLocal.set(equipmentsInCache);
