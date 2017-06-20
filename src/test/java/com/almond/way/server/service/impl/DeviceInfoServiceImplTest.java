@@ -38,7 +38,7 @@ public class DeviceInfoServiceImplTest {
 			Mockito.when(deviceInfoDao.getDeviceLaL(EMPTY, EMPTY, EMPTY)).thenReturn(null);
 			service.getDeviceLalInfo(EMPTY, EMPTY, EMPTY, 1);
 		} catch (WhereAmIException e) {
-			assertEquals(DeviceInfoServiceImpl.NO_THING_FOUND, e.getMessage());
+			assertEquals(DeviceInfoServiceImpl.NOTHING_FOUND, e.getMessage());
 			throw e;
 		}
 	}

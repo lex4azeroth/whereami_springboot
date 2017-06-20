@@ -22,8 +22,6 @@ public class EquipmentServiceImpl implements EquipmentService {
 	@Resource
 	private EquipmentDao equipmentDao;
 	
-//	private List<Equipment> equipmentsInCache;
-	
 	private static final ThreadLocal<List<Equipment>> equipmentsInCacheThreadLocal = new ThreadLocal<List<Equipment>>() {
 		@Override
 		protected List<Equipment> initialValue() {

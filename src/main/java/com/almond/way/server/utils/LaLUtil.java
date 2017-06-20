@@ -77,8 +77,7 @@ public class LaLUtil {
 			reader.close();
 
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new WhereAmIException(e);
 		} catch (IOException e) {
 
 		} finally {
@@ -86,6 +85,7 @@ public class LaLUtil {
 				try {
 					reader.close();
 				} catch (IOException e1) {
+					throw new WhereAmIException(e1);
 				}
 			}
 		}
@@ -99,7 +99,6 @@ public class LaLUtil {
 		try {
 			lines = readLines(ResourceUtils.getFile("classpath:static/lals.properties"));
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 			throw new WhereAmIException(LAL_PROPERTIES_NOT_FOUND, e);
 		}
 		

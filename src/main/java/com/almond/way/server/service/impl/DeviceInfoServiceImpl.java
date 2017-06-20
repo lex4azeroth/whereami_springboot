@@ -27,11 +27,7 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
 
 	private static String deviceLog = "device id is [%s], from is [%s], to is [%s]";
 	
-	static final String NO_THING_FOUND = "No device info found";
-	
-//	protected DeviceInfoServiceImpl(DeviceInfoDao deviceInfoDao) {
-//		this.deviceInfoDao = deviceInfoDao;
-//	}
+	static final String NOTHING_FOUND = "No device info found";
 
 	@Override
 	public List<DeviceLoL> getDeviceLalInfo(String deviceId, String from, String to, int lineNum) {
@@ -39,8 +35,8 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
 		
 		List<DeviceLoL> queriedLoL = deviceInfoDao.getDeviceLaL(deviceId, from, to);
 		if (queriedLoL == null || queriedLoL.isEmpty()) {
-			logger.error(NO_THING_FOUND);
-			throw new WhereAmIException(NO_THING_FOUND);
+			logger.error(NOTHING_FOUND);
+			throw new WhereAmIException(NOTHING_FOUND);
 		}
 
 		return filterDeviceLal(queriedLoL, lineNum);
@@ -52,8 +48,8 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
 		
 		List<DeviceLoL> queriedLoL = deviceInfoDao.getDeviceLaL(deviceId, from, to);
 		if (queriedLoL == null || queriedLoL.isEmpty()) {
-			logger.error(NO_THING_FOUND);
-			throw new WhereAmIException(NO_THING_FOUND);
+			logger.error(NOTHING_FOUND);
+			throw new WhereAmIException(NOTHING_FOUND);
 		}
 		
 		List<DeviceLoL> convertedLoL = new ArrayList<DeviceLoL>();
@@ -74,7 +70,6 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
 		List<LaL> lalPoints = LaLUtil.getLalPoints(lineNum);
 		List<DeviceLoL> resultMap = new ArrayList<DeviceLoL>();
 		for (DeviceLoL dlol : lolListToFilter) {
-//			LaL target = new LaL(Double.valueOf(dlol.getLongitude()), Double.valueOf(dlol.getLatitude()));
 			LaL target = GPSUtil.WGS2BD(Double.valueOf(dlol.getLatitude()), Double.valueOf(dlol.getLongitude()));
 			for (int index = 0; index < lalPoints.size(); index++) {
 				double distance = LaLUtil.getDistance(target, lalPoints.get(index));
@@ -94,8 +89,4 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
 		
 		return resultMap;
 	}
-	
-	
-	
-
 }
