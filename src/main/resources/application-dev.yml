@@ -6,6 +6,6 @@ server:
 # DATASOURCE - MYSQL
 jdbc:  
     driver: com.mysql.jdbc.Driver  
-    url: jdbc:mysql://127.0.0.1:3306/way?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false  
-    username: sa  
-    password:   
+    url: jdbc:mysql://127.0.0.1:3306/way?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false
+    username: root  
+    password: root
