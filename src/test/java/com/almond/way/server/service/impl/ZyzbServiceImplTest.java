@@ -1,8 +1,10 @@
 package com.almond.way.server.service.impl;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +17,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.almond.way.server.dao.ZyzbDao;
 import com.almond.way.server.exception.WhereAmIException;
+import com.almond.way.server.model.ZYZB;
 import com.almond.way.server.service.ZyzbService;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -74,17 +77,12 @@ public class ZyzbServiceImplTest {
 		}
 	}
 
-	@Test(expected = WhereAmIException.class)
+	@Test()
 	public void testGetZyzbListNotFound() {
-		try {
-			String from = "from";
-			String to = "to";
-			Mockito.when(zyzbDao.getZyzbList(from, to)).thenReturn(null);
-			service.getZyzbList(from, to);
-		}
-		catch (WhereAmIException e) {
-			assertEquals(ZyzbService.NOTHING_FOUND, e.getMessage());
-			throw e;
-		}
+		String from = "from";
+		String to = "to";
+		Mockito.when(zyzbDao.getZyzbList(from, to)).thenReturn(new ArrayList<ZYZB>());
+		List<ZYZB> zyzbList = service.getZyzbList(from, to);
+		assertTrue(zyzbList.size() == 0);
 	}
 }

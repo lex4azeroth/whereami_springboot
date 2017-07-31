@@ -1,6 +1,7 @@
 package com.almond.way.server.service.impl;
 
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.almond.way.server.dao.ZyzbDao;
-import com.almond.way.server.exception.WhereAmIException;
 import com.almond.way.server.model.ZYZB;
 import com.almond.way.server.service.ZyzbService;
 
@@ -30,9 +30,10 @@ public class ZyzbServiceImpl implements ZyzbService {
 		
 		List<ZYZB> zyzbList = zyzbDao.getZyzbList(from, to);
 		
-		if (zyzbList.size() <= 0) {
+		if (zyzbList.size() == 0) {
 			logger.error(NOTHING_FOUND);
-			throw new WhereAmIException(NOTHING_FOUND);
+			return new ArrayList<ZYZB>();
+//			throw new WhereAmIException(NOTHING_FOUND);
 		}
 		
 		return zyzbDao.getZyzbList(from, to);
