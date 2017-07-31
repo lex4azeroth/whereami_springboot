@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
-<mapper namespace="com.almond.way.server.dao.MockZyzbDao">  
-<!-- <insert id="registDevice" parameterType="com.almond.way.server.model.MockZyzb">  
-   INSERT INTO WAY_EQU (EQU_ID,EQU_NAME) VALUES (#{equipmentId},#{equipmentName})  
-</insert> -->
+<mapper namespace="com.almond.way.server.dao.ZyzbDao">  
 
-<select id="getDeviceList" resultType="com.almond.way.server.model.MockZyzb">  
+<!-- <select id="getDeviceList" resultType="com.almond.way.server.model.MockZyzb">  
     SELECT PDA_ID as pdaID, PDA_NAME as pdaName FROM TV_TD_ZYZB
+</select> -->
+
+<select id="getZyzbList" resultType="com.almond.way.server.model.ZYZB" parameterType="HashMap">  
+    select GUID, tv_td_zyzb.LCBZ, tv_td_zyzb.ZYKSSJ, tv_td_zyzb.ZYJSSJ from tv_td_zyzb left join tv_td_pda_zyzb on tv_td_zyzb.LCBZ = tv_td_pda_zyzb.LCBZ where GUID in (select GUID from WAY_EQU) and tv_td_pda_zyzb.ZYKSSJ &gt;=#{from} and tv_td_pda_zyzb.ZYJSSJ &lt;=#{to}
 </select>
 
 <!-- <select id="getDevice" resultType="com.almond.way.server.model.Equipment" parameterType="String">  

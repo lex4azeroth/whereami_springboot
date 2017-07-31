@@ -15,12 +15,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.almond.way.server.model.DeviceInfo;
-import com.almond.way.server.model.Equipment;
 import com.almond.way.server.model.DeviceLoL;
-import com.almond.way.server.controller.WhereAmIController;
+import com.almond.way.server.model.Equipment;
+import com.almond.way.server.model.ZYZB;
 import com.almond.way.server.service.DeviceInfoService;
 import com.almond.way.server.service.EquipmentService;
 import com.almond.way.server.service.PublisherService;
+import com.almond.way.server.service.ZyzbService;
 
 @Controller
 @RequestMapping()
@@ -38,6 +39,9 @@ public class WhereAmIController {
 	@Autowired
 	@Qualifier("equipmentServiceImpl")
 	private EquipmentService equipmentService;
+	
+	@Autowired
+	private ZyzbService zyzbService;
 	
 	@RequestMapping(value="mylocation", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE) 
     @ResponseBody
@@ -84,5 +88,14 @@ public class WhereAmIController {
 		logger.info("i have been...");
 		int lineNum = Integer.parseInt(line);
 		return deviceInfoService.getDeviceOriginalLalInfo(equid, from, to, lineNum);
+	}
+	
+	@RequestMapping(value="showmethelist/{from}/{to}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<ZYZB> getZyzbList(
+	                              @PathVariable("from") String from, 
+	                              @PathVariable("to") String to) {
+		logger.info("show me the list...");
+		return zyzbService.getZyzbList(from, to);
 	}
 }
