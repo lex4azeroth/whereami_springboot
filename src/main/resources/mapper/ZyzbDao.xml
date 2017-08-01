@@ -8,7 +8,7 @@
 </select> -->
 
 <select id="getZyzbList" resultType="com.almond.way.server.model.ZYZB" parameterType="HashMap">  
-    select GUID, tv_td_zyzb.LCBZ, tv_td_zyzb.ZYKSSJ, tv_td_zyzb.ZYJSSJ from tv_td_zyzb left join tv_td_pda_zyzb on tv_td_zyzb.LCBZ = tv_td_pda_zyzb.LCBZ where GUID in (select GUID from WAY_EQU) and tv_td_pda_zyzb.ZYKSSJ &gt;=#{from} and tv_td_pda_zyzb.ZYJSSJ &lt;=#{to}
+    select GUID, GD, tv_td_zyzb.LCBZ, tv_td_pda_zyzb.ZYKSSJ, tv_td_pda_zyzb.ZYJSSJ from tv_td_zyzb left join tv_td_pda_zyzb on tv_td_zyzb.LCBZ = tv_td_pda_zyzb.LCBZ where GUID in (select GUID from WAY_EQU) and tv_td_pda_zyzb.ZYKSSJ &gt;=#{from} and tv_td_pda_zyzb.ZYJSSJ &lt;=#{to}
 </select>
 
 <!-- <select id="getDevice" resultType="com.almond.way.server.model.Equipment" parameterType="String">  

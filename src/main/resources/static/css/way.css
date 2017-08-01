@@ -5,6 +5,7 @@
     float:top;/*设置浮动，实现多列效果，div+Css布局中很重要的*/
     /*background:#90C;*/
 }
+
 #Content-Left {
     text-align:left;
     width:10%;
@@ -12,9 +13,10 @@
     float:left;/*设置浮动，实现多列效果，div+Css布局中很重要的*/
     /*background:#90C;*/
 }
+
 #Content-Main {
     height:70%;
-    width:80%;
+    width:100%;
     margin:20px;/*设置元素跟其他元素的距离为20像素*/
     float:left;/*设置浮动，实现多列效果，div+Css布局中很重要的*/
     /*background:#90C;*/
@@ -28,4 +30,77 @@
 .device:hover {
 	color:red;
 	cursor:pointer;
+}
+
+.Zyzb-Table  {
+	border:1
+}
+
+body {
+	padding:0;
+	margin:0;
+	font:normal 12px/24px "\5FAE\8F6F\96C5\9ED1";
+	color:#444;
+}
+
+table {
+	width:100%
+	border:0;
+	margin:100px auto 0;
+	text-align:center;
+	border-collapse:collapse;
+	border-spacing:0;
+}
+
+table th {
+	background:#0090D7;
+	font-weight:normal;
+	line-height:30px;
+	font-size:14px;
+	color:#FFF;
+}
+
+table tr:nth-child(odd) {
+	background:#F4F4F4;
+}
+
+table td:nth-child(even) {
+	color:#C00;
+}
+
+/* table tr:nth-child(5) {
+	background:#73B1E0;
+	color:#FFF;
+} */
+
+table tr:hover {
+	background:#73B1E0;
+	color:#FFF;
+	cursor:pointer;
+}
+
+table td,table th {
+	border:1px solid #EEE;
+}
+
+.float_map {
+	position: absolute;
+	z-index: 99;
+	height:90%;
+	width:95%;
+	top: 20;
+	left: 20;
+	background: rgba(0,0,0,0);
+}
+
+.float_container {
+	float:left;
+	height:100%;
+	width:100%;
+	top: 20;
+	left: 20;
+}
+
+.float_close {
+	float:right;
 }
