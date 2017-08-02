@@ -1,5 +1,7 @@
 #Content-Top {
     height:5%;
+    text-align:center;
+    font-size: 20px;
     /*width:200px;*/
     margin:20px;/*设置元素跟其他元素的距离为20像素*/
     float:top;/*设置浮动，实现多列效果，div+Css布局中很重要的*/
@@ -99,6 +101,18 @@ table td,table th {
 	width:100%;
 	top: 20;
 	left: 20;
+}
+
+.float_error {
+	background: rgba(0,0,0,.5);
+	height:90%;
+	width:95%;
+	text-align: center;
+	font-weight: bold;
+	font-size: 50px;
+	color: #cd0a0a;
+	margin-top: 50px;
+	line-height: 10;
 }
 
 .float_close {

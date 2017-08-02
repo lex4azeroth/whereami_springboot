@@ -116,8 +116,8 @@ function showMapLayer(obj) {
 	var container = "<div id='container' class='float_map'></div><div><a href='javascript:;' class='float_close' data-role='button' onclick='closeMapLayer()'>关闭</a></div>";
 	$("#mapContainer").html(container);
 	$("#myMap").css("display", "block");
-//	showRealMap();
-	var restURL = "ihavebeenoriginal/" + guid + "/" + zykssj + "/" + zyjssj + "/" + gd;
+	var whichRoute = $('#whichRoute input:radio:checked').val();
+	var restURL = whichRoute + "/" + guid + "/" + zykssj + "/" + zyjssj + "/" + gd;
 	whereami(restURL);
 }
 
@@ -133,7 +133,6 @@ function showRealMap() {
 	}
 
 function whereami(restURL) {
-//	var restURL = "ihavebeen/" + equipmentId + "/" + fromDateTime + "/" + endDateTime + "/" + lineNum;
 	var lols = new Array();
 	    $.ajax({
 			type: "GET",
@@ -147,8 +146,16 @@ function whereami(restURL) {
 			}
 		});
 }
+
+function showNoResultsError() {
+	$("#container").html("<div class='float_error'>暂无记录</div>");
+}
 	
 function showRouteWithLol(lols) {
+	if (lols.length == 0) {
+		showNoResultsError();
+		return;
+	}
 	var clon = parseFloat(lols[0].longitude);
 	var clat = parseFloat(lols[0].latitude);
 

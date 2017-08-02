@@ -2,6 +2,8 @@ package com.almond.way.server.service.impl;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +14,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.almond.way.server.dao.DeviceInfoDao;
-import com.almond.way.server.exception.WhereAmIException;
+import com.almond.way.server.model.DeviceLoL;
 import com.almond.way.server.service.DeviceInfoService;
 
 @RunWith(MockitoJUnitRunner.class) 
@@ -32,15 +34,18 @@ public class DeviceInfoServiceImplTest {
 		deviceInfoDao = Mockito.mock(DeviceInfoDao.class);
 	}
 	
-	@Test(expected = WhereAmIException.class)
+	@Test()
 	public void testGetDeviceLalInfoFail() {
-		try {
-			Mockito.when(deviceInfoDao.getDeviceLaL(EMPTY, EMPTY, EMPTY)).thenReturn(null);
-			service.getDeviceLalInfo(EMPTY, EMPTY, EMPTY, 1);
-		} catch (WhereAmIException e) {
-			assertEquals(DeviceInfoServiceImpl.NOTHING_FOUND, e.getMessage());
-			throw e;
-		}
+		Mockito.when(deviceInfoDao.getDeviceLaL(EMPTY, EMPTY, EMPTY)).thenReturn(null);
+		List<DeviceLoL> infoList = service.getDeviceLalInfo(EMPTY, EMPTY, EMPTY, 1);
+		assertTrue(infoList.isEmpty());
+	}
+	
+	@Test()
+	public void testGetDeviceOriginalLalInfoFail() {
+		Mockito.when(deviceInfoDao.getDeviceLaL(EMPTY, EMPTY, EMPTY)).thenReturn(null);
+		List<DeviceLoL> infoList = service.getDeviceLalInfo(EMPTY, EMPTY, EMPTY, 1);
+		assertTrue(infoList.isEmpty());
 	}
 	
 	@Test

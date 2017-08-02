@@ -36,7 +36,7 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
 		List<DeviceLoL> queriedLoL = deviceInfoDao.getDeviceLaL(deviceId, from, to);
 		if (queriedLoL == null || queriedLoL.isEmpty()) {
 			logger.error(NOTHING_FOUND);
-			throw new WhereAmIException(NOTHING_FOUND);
+			return new ArrayList<DeviceLoL>();
 		}
 
 		return filterDeviceLal(queriedLoL, lineNum);
@@ -49,7 +49,7 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
 		List<DeviceLoL> queriedLoL = deviceInfoDao.getDeviceLaL(deviceId, from, to);
 		if (queriedLoL == null || queriedLoL.isEmpty()) {
 			logger.error(NOTHING_FOUND);
-			throw new WhereAmIException(NOTHING_FOUND);
+			return new ArrayList<DeviceLoL>();
 		}
 		
 		List<DeviceLoL> convertedLoL = new ArrayList<DeviceLoL>();

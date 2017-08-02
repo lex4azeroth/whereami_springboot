@@ -30,10 +30,9 @@ public class ZyzbServiceImpl implements ZyzbService {
 		
 		List<ZYZB> zyzbList = zyzbDao.getZyzbList(from, to);
 		
-		if (zyzbList.size() == 0) {
+		if (zyzbList == null || zyzbList.isEmpty()) {
 			logger.error(NOTHING_FOUND);
 			return new ArrayList<ZYZB>();
-//			throw new WhereAmIException(NOTHING_FOUND);
 		}
 		
 		return zyzbDao.getZyzbList(from, to);

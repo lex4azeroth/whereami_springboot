@@ -7,20 +7,24 @@
 </head>
 <body>
 	<div id="Content-Top">
-		上海南翔站货检员作业轨迹追踪系统
-		<label id='currentDevice'/>
+		上海南翔站货检员作业轨迹追踪系统 <label id='currentDevice' />
 	</div>
 
 	<div id="Content-Main">
 		<p />
-		<label for="fromDate">选择开始日期</label><input id="fromDate" type="date" required />
-		<label for="fromTime">起始结束时间</label><input id="fromTime" type="time" required />
-		<label id="fromValidator" />
+		<label for="fromDate">开始日期</label><input id="fromDate" type="date"
+			required /> <label for="fromTime">结束时间</label><input id="fromTime"
+			type="time" required /> <label id="fromValidator" />
 		<p />
-		<label for="endDate">结束日期</label><input id="endDate" type="date" required />
-		<label for="endTime">结束时间</label><input id="endTime" type="time" required />
-		<label id="endValidator" />
+		<label for="endDate">结束日期</label><input id="endDate" type="date"
+			required /> <label for="endTime">结束时间</label><input id="endTime"
+			type="time" required /> <label id="endValidator" />
 		<p />
+		<form id='whichRoute' action="" method="get">
+			<label><input name="route" type="radio" value="ihavebeen" checked="true"/>优化路径</label>
+			<label><input name="route" type="radio" value="ihavebeenoriginal" />原始路径</label>
+		</form>
+		
 		<button id="confirm" onclick="ajaxT()">确认</button>
 		<p />
 		<div id="tableAjax"></div>
