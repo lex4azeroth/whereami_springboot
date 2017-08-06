@@ -22,6 +22,16 @@ public class DataSourceConfiguration {
 	private String username;
 	@Value("${jdbc.password}")
 	private String password;
+	
+	@Bean(name="dataSource")
+	public DriverManagerDataSource dataSource() {
+		DriverManagerDataSource dataSource = new DriverManagerDataSource();
+		dataSource.setDriverClassName(driver);
+		dataSource.setUrl(url);
+		dataSource.setUsername(username);
+		dataSource.setPassword(password);
+		return dataSource;
+	}
 
 	@Profile("prod")
 	@Bean(name="dataSource")
