@@ -1,3 +1,12 @@
+#adminLoginButton {
+	float: right;
+	
+}
+
+#deviceTitle {
+	float: left;
+	width: 80%;
+}
 #Content-Top {
     height:5%;
     text-align:center;
@@ -8,6 +17,23 @@
     /*background:#90C;*/
 }
 
+.mapping-top {
+	height:10%; 
+    text-align:center;
+    font-size: 10px;
+    /*width:200px;*/
+    /* margin:20px;设置元素跟其他元素的距离为20像素 */
+    float:top;/*设置浮动，实现多列效果，div+Css布局中很重要的*/
+}
+
+.mapping-detail {
+	float: right;
+	text-align: left;
+	width: 60%;
+	height: 85%;
+	border-left: 1px solid black;
+}
+
 #Content-Left {
     text-align:left;
     width:10%;
@@ -16,9 +42,19 @@
     /*background:#90C;*/
 }
 
+.deviceList {
+	/* border: 2px solid black; */
+	/* border-right: 1px solid black; */
+	text-align:left;
+    width:10%;
+    margin:20px;/*设置元素跟其他元素的距离为20像素*/
+    float:left;/*设置浮动，实现多列效果，div+Css布局中很重要的*/
+    /*background:#90C;*/
+}
+
 #Content-Main {
     height:70%;
-    width:100%;
+    width:80%;
     margin:20px;/*设置元素跟其他元素的距离为20像素*/
     float:left;/*设置浮动，实现多列效果，div+Css布局中很重要的*/
     /*background:#90C;*/
@@ -45,13 +81,14 @@ body {
 	color:#444;
 }
 
-table {
-	width:100%
+ table {
+	width:100%;
 	border:0;
 	margin:100px auto 0;
 	text-align:center;
 	border-collapse:collapse;
 	border-spacing:0;
+	/* border: none; */
 }
 
 table th {
@@ -62,28 +99,28 @@ table th {
 	color:#FFF;
 }
 
-table tr:nth-child(odd) {
+/* table tr:nth-child(odd) {
 	background:#F4F4F4;
 }
 
 table td:nth-child(even) {
 	color:#C00;
-}
+}  */
 
-/* table tr:nth-child(5) {
+ /* table tr:nth-child(5) {
 	background:#73B1E0;
 	color:#FFF;
-} */
+}  */
 
-table tr:hover {
+ /* table tr:hover {
 	background:#73B1E0;
 	color:#FFF;
 	cursor:pointer;
-}
+} */
 
-table td,table th {
+/* table td,table th {
 	border:1px solid #EEE;
-}
+}  */
 
 .float_map {
 	position: absolute;
@@ -93,6 +130,27 @@ table td,table th {
 	top: 20;
 	left: 20;
 	background: rgba(0,0,0,0);
+}
+
+.float_admin {
+	/* position: absolute;
+	z-index: 99;
+	height:90%;
+	width:95%;
+	top: 20;
+	left: 20;
+	background: rgba(0,0,0,0); */
+	background: rgba(0,0,0,.7);
+	height:50%;
+	width:50%;
+	text-align: center;
+	font-weight: bold;
+	font-size: 50px;
+	left: 20;
+	z-index: 99;
+	/* color: #cd0a0a; */
+	/* margin-top: 50px; */
+	/* line-height: 10; */
 }
 
 .float_container {
@@ -117,4 +175,86 @@ table td,table th {
 
 .float_close {
 	float:right;
+}
+
+.modal {
+	display: none; /* 默认隐藏 */
+	position: fixed; 
+	z-index: 1;
+	padding-top: 100px;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0,0,0);
+	background-color: rgba(0,0,0,0.4); 
+} 
+  
+    /* 弹窗内容 */ 
+.modal-content {
+	position: relative;
+	background-color: #fefefe;
+	margin: auto;
+	padding: 0;
+	border: 1px solid #888;
+	width: 35%;
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+	-webkit-animation-name: animatetop;
+	-webkit-animation-duration: 0.4s;
+	animation-name: animatetop;
+	animation-duration: 0.4s 
+}
+
+@-webkit-keyframes animatetop {
+	from {top:-300px; opacity:0}
+	to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+	from {top:-300px; opacity:0}
+	to {top:0; opacity:1}
+}
+
+.close {
+	color: white;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.modal-header {
+	padding: 2px 16px;
+	background-color: #5587A2;
+	/* color: white; */
+}
+
+.modal-body {
+	background-color: #5587A2;
+	padding: 2px 16px;
+	height: 40%;
+	width: 35%;
+	margin-left: 30%;
+}
+
+.modal-footer {
+	padding: 2px 16px;
+	background-color: #5587A2;
+	text-align: right;
+	color: white;
+	width: 35%;
+	margin-left: 30%;
+}
+
+#deviceDetailTabel {
+	float: right;
+	border: none;
+
 }
