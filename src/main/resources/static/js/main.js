@@ -397,6 +397,7 @@ $(document).ready(function() {
 		$('#lineNum').val(1);
 		$('#originalBtn').css("visibility", "hidden");
 		$('#deviceMapping').css("visibility", "hidden");
+		$('#theoriginal').css("visibility", "hidden");
 		$("#adminLoginButton").text("管理员登入");
 		currentRoleIsAdmin = false;
 		// $("adminLogoutButton").css("visibility", "hidden");

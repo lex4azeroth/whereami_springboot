@@ -2,10 +2,14 @@ package com.almond.way.server.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,6 +46,24 @@ public class WhereAmIController {
 	
 	@Autowired
 	private ZyzbService zyzbService;
+	
+	@Value("${admin.username}")
+	private String adminName;
+	@Value("${admin.password}")
+	private String adminPassword;
+	
+	@RequestMapping(value="adminLogin/{adminusername}/{adminpassword}", method=RequestMethod.GET)
+	@ResponseBody
+	public boolean adminLogin(@PathVariable("adminusername") String adminusername, @PathVariable("adminpassword") String adminpassword) {
+		String userName = adminusername;
+		String password = adminpassword;
+		
+		if (userName.equals(adminName) && password.equals(adminPassword)) {
+			return true;
+		}
+		
+		return false;
+	}
 	
 	@RequestMapping(value="mylocation", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE) 
     @ResponseBody
@@ -97,5 +119,22 @@ public class WhereAmIController {
 	                              @PathVariable("to") String to) {
 		logger.info("show me the list...");
 		return zyzbService.getZyzbList(from, to);
+	}
+	
+	@RequestMapping(value="updatedevicename/{id}/{name}", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public String updateDeviceName(@PathVariable("id") String id, @PathVariable("name") String name) {
+		logger.info("Update device name");
+		Equipment equipment = new Equipment();
+		equipment.setEquipmentId(id);
+		equipment.setEquipmentName(name);
+		return equipmentService.udpateDeviceName(equipment);
+	}
+	
+	@RequestMapping(value="equipment/{id}", method=RequestMethod.GET, produces=MediaType.ALL_VALUE)
+	@ResponseBody
+	public String getDeviceName(@PathVariable("id") String id) {
+		logger.info("Get device name");
+		return equipmentService.getDeviceName(id);
 	}
 }

@@ -8,7 +8,9 @@
 </select> -->
 
 <select id="getZyzbList" resultType="com.almond.way.server.model.ZYZB" parameterType="HashMap">  
-    select GUID, GD, tv_td_zyzb.LCBZ, tv_td_pda_zyzb.ZYKSSJ, tv_td_pda_zyzb.ZYJSSJ from tv_td_zyzb left join tv_td_pda_zyzb on tv_td_zyzb.LCBZ = tv_td_pda_zyzb.LCBZ where GUID in (select GUID from WAY_EQU) and tv_td_pda_zyzb.ZYKSSJ &gt;=#{from} and tv_td_pda_zyzb.ZYJSSJ &lt;=#{to}
+<!--     select GUID, GD, tv_td_zyzb.LCBZ, tv_td_pda_zyzb.ZYKSSJ, tv_td_pda_zyzb.ZYJSSJ from tv_td_zyzb left join tv_td_pda_zyzb on tv_td_zyzb.LCBZ = tv_td_pda_zyzb.LCBZ where GUID in (select GUID from WAY_EQU) and tv_td_pda_zyzb.ZYKSSJ &gt;=#{from} and tv_td_pda_zyzb.ZYJSSJ &lt;=#{to}
+ -->    
+ select tv_td_zyzb.GD, tv_td_zyzb.ZFJ, tv_td_zyzb.ZEQUID, tv_td_zyzb.YFJ, tv_td_zyzb.YEQUID, tv_td_zyzb.LCBZ, tv_td_pda_zyzb.ZYKSSJ, tv_td_pda_zyzb.ZYJSSJ from tv_td_zyzb left join tv_td_pda_zyzb on tv_td_zyzb.LCBZ = tv_td_pda_zyzb.LCBZ where tv_td_pda_zyzb.ZYKSSJ &gt;=#{from} and tv_td_pda_zyzb.ZYJSSJ &lt;=#{to} and ((tv_td_zyzb.ZFJ in (select EQU_NAME from WAY_EQU)) or (tv_td_zyzb.YFJ in (select EQU_NAME from WAY_EQU)))
 </select>
 
 <!-- <select id="getDevice" resultType="com.almond.way.server.model.Equipment" parameterType="String">  

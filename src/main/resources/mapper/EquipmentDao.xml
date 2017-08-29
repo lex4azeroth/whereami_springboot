@@ -17,10 +17,10 @@
 <delete id="deleteDevice" parameterType="int">  
     DELETE FROM WAY_EQU WHERE id=#{id}  
 </delete>
-<!-- <update id="updateUser" parameterType="com.springMyBatis.system.model.User">  
-    UPDATE user SET password=#{password} WHERE id=#{id}  
+<update id="updateDeviceName" parameterType="com.almond.way.server.model.Equipment">  
+    UPDATE WAY_EQU SET EQU_NAME=#{equipmentName} WHERE EQU_ID=#{equipmentId}  
 </update>  
-<delete id="deleteUser" parameterType="int">  
+<!-- <delete id="deleteUser" parameterType="int">  
     DELETE FROM user WHERE id=#{id}  
 </delete>   -->
 </mapper>

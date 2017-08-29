@@ -10,4 +10,8 @@ public interface EquipmentService {
 	List<Equipment> getEquipmentList();
 	
 	boolean isEquipmentRegisted(String id);
+	
+	String udpateDeviceName(Equipment equipment);
+	
+	String getDeviceName(String equId);
 }

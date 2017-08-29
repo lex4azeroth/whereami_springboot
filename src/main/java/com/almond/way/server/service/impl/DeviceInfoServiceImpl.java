@@ -34,7 +34,12 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
 		logger.info(String.format(deviceLog, deviceId, from, to));
 		
 		List<DeviceLoL> queriedLoL = deviceInfoDao.getDeviceLaL(deviceId, from, to);
-		if (queriedLoL == null || queriedLoL.isEmpty()) {
+		
+		if (queriedLoL.isEmpty()) {
+			queriedLoL = deviceInfoDao.getDeviceLaLWithNoId(from, to);
+		}
+		
+		if (queriedLoL.isEmpty()) {
 			logger.error(NOTHING_FOUND);
 			return new ArrayList<DeviceLoL>();
 		}
@@ -47,7 +52,12 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
 		logger.info(String.format(deviceLog, deviceId, from, to));
 		
 		List<DeviceLoL> queriedLoL = deviceInfoDao.getDeviceLaL(deviceId, from, to);
-		if (queriedLoL == null || queriedLoL.isEmpty()) {
+		
+		if (queriedLoL.isEmpty()) {
+			queriedLoL = deviceInfoDao.getDeviceLaLWithNoId(from, to);
+		}
+		
+		if (queriedLoL.isEmpty()) {
 			logger.error(NOTHING_FOUND);
 			return new ArrayList<DeviceLoL>();
 		}

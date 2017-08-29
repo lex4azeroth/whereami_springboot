@@ -13,4 +13,6 @@ public interface EquipmentDao {
 	Equipment getDevice(String equimpentId);
 	
 	int deleteDevice(int id);
+	
+	int updateDeviceName(Equipment equipment);
 }

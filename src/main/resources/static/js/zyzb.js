@@ -68,27 +68,34 @@ function ajaxT() {
 }
 
 function createShowingTable(data) {
-	var tableStr = "<table width='99%'>";
+	var tableStr = "<div class='dataList'><table width='99%'>";
 	tableStr = tableStr + "<tr >" 
-			+ "<td width='10%'>手持设备号</td>"
+			+ "<td width='10%'>列车标志</td>"
+			+ "<td width='10%'>左作业员</td>"
+			+ "<td width='10%'>右作业员</td>"
 			+ "<td width='10%'>出发车次</td>"
 			+ "<td witdh='10%'>到达车次</td>"
 			//            +"<td width='5%'><input id='checkAll' name='checkAll' type='checkbox' /></td>"  
 			+ "<td width='20%'>作业开始时间</td>" 
 			+ "<td width='20%'>作业结束时间</td>"
-			+ "<td width='20%'>作业人</td>" 
+			// + "<td width='20%'>作业人</td>" 
 			+ "<td width='10%'>股道</td>" + "</tr>";
 	var len = data.length;
 	for (var i = 0; i < len; i++) {
 		tableStr = tableStr 
-		+ "<tr onclick='showMapLayer(this)'>" 
-			+ "<td>" + data[i].guid + "</td>"
+		+ "<tr>" 
+			// + "<td style='display:none;'>" + data[i].guid + "</td>"
 			//                +"<td><input class='check' id='checkOne' name='checkOne' type='checkbox' value='"+data[i].key+"' /></td>"  
+			+ "<td>" + data[i].lcbz + "</td>" 
+			+ "<td class='clickable' onclick='showMapLayer(this)'>" + data[i].zfj + "</td>" 
+			+ "<td style='display:none;'>" + data[i].zequid + "</td>"
+			+ "<td class='clickable' onclick='showMapLayer(this)'>" + data[i].yfj + "</td>" 
+			+ "<td style='display:none;'>" + data[i].yequid + "</td>"
 			+ "<td>" + data[i].cfcc + "</td>" 
 			+ "<td>" + data[i].ddcc + "</td>"
 			+ "<td>" + data[i].zykssj + "</td>" 
 			+ "<td>" + data[i].zyjssj + "</td>" 
-			+ "<td>" + data[i].zbya + "</td>" 
+			// + "<td>" + data[i].zbya + "</td>" 
 			+ "<td>" + data[i].gd + "</td>" 
 		+ "</tr>";
 	}
@@ -98,7 +105,7 @@ function createShowingTable(data) {
 		+ "<td colspan='6'><font color='#cd0a0a'>暂无记录</font></td>" 
 		+ "</tr>";
 	}
-	tableStr = tableStr + "</table>";
+	tableStr = tableStr + "</table></div>";
 	$("#tableAjax").html(tableStr);
 }
 
@@ -108,13 +115,13 @@ function cleanValidators() {
 }
 
 function showMapLayer(obj) {
-	var guid = obj.childNodes[0].innerText;
-	var zykssj = obj.childNodes[3].innerText;
-	var zyjssj = obj.childNodes[4].innerText;
-	var gd = obj.childNodes[6].innerText;
-	$("#myMap").addClass("float_map");
-	var container = "<div id='container' class='float_map'></div><div><a href='javascript:;' class='float_close' data-role='button' onclick='closeMapLayer()'>关闭</a></div>";
-	$("#mapContainer").html(container);
+	var guid = obj.parentElement.childNodes[obj.cellIndex + 1].innerText;
+	var zykssj = obj.parentElement.childNodes[7].innerText;
+	var zyjssj = obj.parentElement.childNodes[8].innerText;
+	var gd = obj.parentElement.childNodes[9].innerText;
+	$("#myMap").addClass("modal");
+	var container = "<span class='close' onclick='closeMapLayer()'>x</span><div id='container' class='float_map'></div>";
+	$("#mapContainer").html(container);.23
 	$("#myMap").css("display", "block");
 	var whichRoute = $('#whichRoute input:radio:checked').val();
 	var restURL = whichRoute + "/" + guid + "/" + zykssj + "/" + zyjssj + "/" + gd;
@@ -182,9 +189,155 @@ function showRouteWithLol(lols) {
 	var polyline = new BMap.Polyline(polyLine, {strokeColor:"yellow", strokeWeight:1, strokeOpacity:0.9});
 	map.addOverlay(polyline);
 	}
+
+function mappdevice() {
+	$('#myModal').css("display", "block");
+	$('#content').html(mappingTable);
+	$('#modelbody').css("height", "70%");
+	showDeviceList2();
+}
+
+function deviceMappingChoosen() {
+	var equId = this.id;
+	$.ajax({
+		type: "GET",
+        url: "equipment/" + equId,
+		async: true,
+		contentType: "*/*",
+        cache:false,
+		success: function(data) {
+			var equName = data;
+			showDeviceInfo(equId, equName);
+		}
+	});
+}
+
+function showDeviceInfo(equId, equName) {
+	$('#equDetailId').text(equId);
+	$('#equDetailName')[0].value = equName;
+}
+
+function doLogin() {
+	// currentRoleIsAdmin = ($("#username")[0].value == $("#password")[0].value);
+	// theOriginal
+	$.ajax({
+		type: "GET",
+		url: "adminLogin/" + $("#username")[0].value + "/" + $("#password")[0].value, 
+		async: false,
+		cache: false,
+		success: function(data) {
+			currentRoleIsAdmin = data;
+		}
+	});
+
+	if (currentRoleIsAdmin) {
+		$("#originalBtn").css("visibility", "visible");
+		$('#deviceMapping').css("visibility", "visible");
+		$("#adminLoginButton").text("管理员登出");
+		$("#myModal").css("display", "none");
+		$('#whichRoute').append(theOriginal);
+	} else {
+		$('#errormessage')[0].innerText = "登录失败，账号或密码错误";
+	}
+}
+
+function adminLogin() {
+
+	if (!currentRoleIsAdmin) {
+		$('#myModal').css("display", "block");
+		$('#content').html(loginContent);
+		// $('#content').css("height", "70%");
+		// $('#content').css("float", "right");
+		// $('#content').css("padding", "right");
+		$('#modelbody').css("height", "40%");
+		$("#username")[0].value="";
+		$("#password")[0].value=""
+	} else {
+		$("#originalBtn").css("visibility", "hidden");
+		$('#deviceMapping').css("visibility", "hidden");
+		$("#adminLoginButton").text("管理员登入");
+		$('#myModal').css("display", "none");
+		// $('input[name=route]:eq[0]').attr("checked", "1");
+		$('#theoriginalrout').remove();
+		$('#theoptimizedroute').remove();
+		$('#whichRoute').append(theOptimized);
+		
+		currentRoleIsAdmin = false;
+	}
+	// $('#myModal').css("display", "block"); 
+}
+
+function closeAdminLogin() {
+	$('#myModal').css("display", "none"); 
+}
+
+function closeDeviceMapping() {
+	$('#myModal2').css("display", "none");
+}
+
+function showDeviceList2() {
+	var devices = new Array();
+    $.ajax({
+		type: "GET",
+        url: "equipments",
+		async: true,
+		contentType: "application/json",
+        cache:false,
+		success: function(data) {
+			devices = data;
+		    for (var index = 0; index < devices.length; index++) {
+		    	var li = document.createElement('li');
+				var equId = devices[index].equipmentId;
+				var id = devices[index].id;
+				var equName = devices[index].equipmentName;
+		    	li.setAttribute('class', 'device');
+				li.setAttribute('id', equId);
+				// li.setAttribute('equId', equId);
+				// li.setAttribute('equName', equName);
+		    	li.innerHTML = equId;
+				li.onclick = deviceMappingChoosen;
+		        $('#Content-Left-Mini').append(li);
+		    }
+		}
+	});
+}
+
+function updateDeviceName() {
+	var equId = $('#equDetailId')[0].innerText;
+	var equName = $('#equDetailName')[0].value;
+	// alert(equId + " + " + equName);
+
+	$.ajax({
+		type: "POST",
+		url: "updatedevicename/" + equId + "/" + equName,
+		async: true, 
+		cache: false,
+		sunccess: function(data) {
+			alert("updated");
+		}
+	});
+}
+
 $(document).ready(function() {
+		// showDeviceList();
+		
 		$('#fromDate').val(moment().format('YYYY-MM-DD'));
 		$('#endDate').val(moment().format('YYYY-MM-DD'));
 		$('#fromTime').val(moment().format('hh:mm:ss'));
 		$('#endTime').val(moment().format('hh:mm:ss'));
+		$('#lineNum').val(1);
+		$('#originalBtn').css("visibility", "hidden");
+		$('#deviceMapping').css("visibility", "hidden");
+		// $('#theoriginal').css("visibility", "hidden");
+		$("#adminLoginButton").text("管理员登入");
+		$('#whichRoute').append(theOptimized);
+		currentRoleIsAdmin = false;
+		// $("adminLogoutButton").css("visibility", "hidden");
 	});
+
+var currentDeviceId;
+var currentRoleIsAdmin;
+var mappingTable = "<div class='mapping-top' id=''>设备配置管理</div><div id='Content-Left-Mini' class='deviceList'></div><div class='mapping-detail'><table id='deviceDetailTabel'><tr><td><label style='text-align=right'>设备编号：</label></td><td><label id='equDetailId' style='text-align=left'></lable></td></tr><tr><td><label style='text-align=right'>设备名称：</lable></td><td><input id='equDetailName' type='text' style='text-align=left'></input></td></tr><tr><td colspan='2' style='padding:10%'></td></tr><tr><td colspan='2'><button onclick='updateDeviceName()'>更新</button></td></tr></table></div>";
+var loginContent = "<table id='loginbody'><tr><td colspan='2'>管理员登入</td></tr><tr><td colspan='2' style='padding:5%'></td></tr><tr><td><label>管理员账号</label></td><td><input id='username' type='text'></input></td></tr><tr><td><label>管理员账号</label></td><td><input id='password' type='password'></input></td></tr><tr><td colspan='2' style='padding:5%'></td></tr><tr><td colspan='2'><button onclick='doLogin()'>登入</button></td></tr><tr><td colspan='2'><label id='errormessage'></label></td></tr></table>"
+var theOriginal = "<label id='theoriginalrout'><input name='route' type='radio' value='ihavebeenoriginal' />原始路径</label>";
+var theOptimized = "<label id='theoptimizedroute'><input name='route' type='radio' value='ihavebeen' checked='true'/>优化路径</label>";

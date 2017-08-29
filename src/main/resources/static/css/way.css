@@ -31,7 +31,7 @@
 	text-align: left;
 	width: 60%;
 	height: 85%;
-	border-left: 1px solid black;
+	/* border-left: 1px solid black; */
 }
 
 #Content-Left {
@@ -63,6 +63,7 @@
 .device {
 	list-style-type:none;
 	line-height:30px;
+	text-align: left;
 }
 
 .device:hover {
@@ -81,7 +82,7 @@ body {
 	color:#444;
 }
 
- table {
+table {
 	width:100%;
 	border:0;
 	margin:100px auto 0;
@@ -99,37 +100,44 @@ table th {
 	color:#FFF;
 }
 
-/* table tr:nth-child(odd) {
+.dataList table tr:nth-child(odd) {
 	background:#F4F4F4;
 }
 
-table td:nth-child(even) {
+.dataList table td:nth-child(even) {
 	color:#C00;
-}  */
+}  
 
  /* table tr:nth-child(5) {
 	background:#73B1E0;
 	color:#FFF;
 }  */
 
- /* table tr:hover {
+.dataList table tr:hover {
 	background:#73B1E0;
 	color:#FFF;
-	cursor:pointer;
-} */
+	/* cursor:pointer; */
+}
 
-/* table td,table th {
+.dataList table td,table th {
 	border:1px solid #EEE;
-}  */
+}
+
+.clickable:hover {
+	cursor:pointer;
+}
+
 
 .float_map {
 	position: absolute;
 	z-index: 99;
-	height:90%;
+	height:80%;
 	width:95%;
-	top: 20;
-	left: 20;
+	 top: 10; 
+	left: 50;
 	background: rgba(0,0,0,0);
+	/* float: left; */
+	/* background: #73B1E0; */
 }
 
 .float_admin {
@@ -153,28 +161,31 @@ table td:nth-child(even) {
 	/* line-height: 10; */
 }
 
-.float_container {
+/* .float_container {
 	float:left;
 	height:100%;
 	width:100%;
 	top: 20;
 	left: 20;
-}
+} */
 
 .float_error {
 	background: rgba(0,0,0,.5);
-	height:90%;
+	height:80%;
 	width:95%;
 	text-align: center;
 	font-weight: bold;
 	font-size: 50px;
 	color: #cd0a0a;
-	margin-top: 50px;
-	line-height: 10;
+	margin-top: 100px;
+	line-height: 10; 
+	/* top: 10;
+	left: 50; */
 }
 
 .float_close {
 	float:right;
+	/* right:20; */
 }
 
 .modal {
@@ -218,7 +229,8 @@ table td:nth-child(even) {
 
 .close {
 	color: white;
-	float: right;
+	float: right; 
+	/* right: 20px; */
 	font-size: 28px;
 	font-weight: bold;
 }
@@ -233,7 +245,6 @@ table td:nth-child(even) {
 .modal-header {
 	padding: 2px 16px;
 	background-color: #5587A2;
-	/* color: white; */
 }
 
 .modal-body {
@@ -256,5 +267,29 @@ table td:nth-child(even) {
 #deviceDetailTabel {
 	float: right;
 	border: none;
+	width: 100%;
+}
 
+#Content-Left-Mini {
+	float: left;
+	height: 70%;
+	width: 30%;
+	overflow: scroll;
+}
+
+#errormessage {
+	text-align: center;
+	color: red;
+}
+
+#content {
+	/* padding-top: 30%; */
+	height: 70%;
+	float: center;
+}
+
+#loginbody {
+	height: 70%;
+	border-top: 0;
+	margin: 0;
 }

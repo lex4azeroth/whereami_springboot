@@ -7,7 +7,10 @@
 </head>
 <body>
 	<div id="Content-Top">
-		上海南翔站货检员作业轨迹追踪系统 <label id='currentDevice' />
+		<div id='deviceTitle'>
+			上海南翔站货检员作业轨迹追踪系统 <label id='currentDevice' />
+		</div>
+		<button id='adminLoginButton' onclick='adminLogin()'></button>
 	</div>
 
 	<div id="Content-Main">
@@ -31,6 +34,22 @@
 		<div id="myMap">
 			<div id='mapContainer'></div>
 		</div>
+		
+		<div id="adminLogin">
+			<div id='adminManagement'></div>
+		</div>
+	
+		<div id="myModal" class="modal">
+			<div class="modal-content">
+				<div id="modelbody" class="modal-body">
+					<span class="close" onclick='closeAdminLogin()'>×</span>
+					<div id="content">
+	
+					</div>
+				</div>
+				<div class="modal-footer">
+				</div>
+	  	</div>
 	</div>
 	<script type="text/javascript" src="js/jQuery-2.2.0.min.js"></script>
 	<script type="text/javascript" src="js/json2.js"></script>
@@ -38,7 +57,7 @@
 	<script type="text/javascript" src="js/moment.js"></script>
 	<script type="text/javascript" src="js/GPSUtil.js"></script>
 	<script type="text/javascript" src="js/zyzb.js"></script>
-	
+	<script type="text/javascript" src="js/main.js"></script>
 
 </body>
 </html>

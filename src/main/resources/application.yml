@@ -44,4 +44,6 @@ spring:
 #    level:  
 #       com.ibatis:DEBUG
   
- 
+admin:
+  username: admin
+  password: admin
