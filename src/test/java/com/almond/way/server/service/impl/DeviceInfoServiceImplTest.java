@@ -37,14 +37,14 @@ public class DeviceInfoServiceImplTest {
 	@Test()
 	public void testGetDeviceLalInfoFail() {
 		Mockito.when(deviceInfoDao.getDeviceLaL(EMPTY, EMPTY, EMPTY)).thenReturn(null);
-		List<DeviceLoL> infoList = service.getDeviceLalInfo(EMPTY, EMPTY, EMPTY, 1);
+		List<DeviceLoL> infoList = service.getDeviceLalInfo(EMPTY, EMPTY, EMPTY, "");
 		assertTrue(infoList.isEmpty());
 	}
 	
 	@Test()
 	public void testGetDeviceOriginalLalInfoFail() {
 		Mockito.when(deviceInfoDao.getDeviceLaL(EMPTY, EMPTY, EMPTY)).thenReturn(null);
-		List<DeviceLoL> infoList = service.getDeviceLalInfo(EMPTY, EMPTY, EMPTY, 1);
+		List<DeviceLoL> infoList = service.getDeviceLalInfo(EMPTY, EMPTY, EMPTY, "");
 		assertTrue(infoList.isEmpty());
 	}
 	

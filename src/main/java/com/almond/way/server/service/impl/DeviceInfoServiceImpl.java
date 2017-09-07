@@ -30,7 +30,7 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
 	static final String NOTHING_FOUND = "No device info found";
 
 	@Override
-	public List<DeviceLoL> getDeviceLalInfo(String deviceId, String from, String to, int lineNum) {
+	public List<DeviceLoL> getDeviceLalInfo(String deviceId, String from, String to, String lineNum) {
 		logger.info(String.format(deviceLog, deviceId, from, to));
 		
 		List<DeviceLoL> queriedLoL = deviceInfoDao.getDeviceLaL(deviceId, from, to);
@@ -48,7 +48,7 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
 	}
 	
 	@Override
-	public List<DeviceLoL> getDeviceOriginalLalInfo(String deviceId, String from, String to, int lineNum) {
+	public List<DeviceLoL> getDeviceOriginalLalInfo(String deviceId, String from, String to, String lineNum) {
 		logger.info(String.format(deviceLog, deviceId, from, to));
 		
 		List<DeviceLoL> queriedLoL = deviceInfoDao.getDeviceLaL(deviceId, from, to);
@@ -75,7 +75,7 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
 		return convertedLoL;
 	}
 	
-	List<DeviceLoL> filterDeviceLal(List<DeviceLoL> lolListToFilter, int lineNum) {
+	List<DeviceLoL> filterDeviceLal(List<DeviceLoL> lolListToFilter, String lineNum) {
 		logger.info("queried size [" + lolListToFilter.size() + "]");
 		List<LaL> lalPoints = LaLUtil.getLalPoints(lineNum);
 		List<DeviceLoL> resultMap = new ArrayList<DeviceLoL>();

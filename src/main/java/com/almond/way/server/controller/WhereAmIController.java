@@ -2,9 +2,6 @@ package com.almond.way.server.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,8 +93,8 @@ public class WhereAmIController {
 			@PathVariable("to") String to, 
 			@PathVariable("line") String line) {
 		logger.info("i have been...");
-		int lineNum = Integer.parseInt(line);
-		return deviceInfoService.getDeviceLalInfo(equid, from, to, lineNum);
+//		int lineNum = Integer.parseInt(line);
+		return deviceInfoService.getDeviceLalInfo(equid, from, to, line);
 	}
 	
 	@RequestMapping(value="ihavebeenoriginal/{equid}/{from}/{to}/{line}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
@@ -108,8 +105,8 @@ public class WhereAmIController {
 			@PathVariable("to") String to, 
 			@PathVariable("line") String line) {
 		logger.info("i have been...");
-		int lineNum = Integer.parseInt(line);
-		return deviceInfoService.getDeviceOriginalLalInfo(equid, from, to, lineNum);
+//		int lineNum = Integer.parseInt(line);
+		return deviceInfoService.getDeviceOriginalLalInfo(equid, from, to, line);
 	}
 	
 	@RequestMapping(value="showmethelist/{from}/{to}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)

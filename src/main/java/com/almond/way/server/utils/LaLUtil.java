@@ -6,22 +6,34 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.util.ResourceUtils;
 
 import com.almond.way.server.exception.WhereAmIException;
 import com.almond.way.server.model.DeviceLoL;
+import com.almond.way.server.model.Equipment;
 import com.almond.way.server.model.LaL;
 import com.almond.way.server.model.Line;
 
 public class LaLUtil {
 
 	private static final String COMMA = ",";
-	private static final String LINE_PREFIX = "LINE_";
+	private static final String GD_PATTERN = "^(XD|SD|XC|XB|SB|SC|XF|SF)\\d{2}$";
+	private static final String GD_NOT_FOUND = "GD {%s} not found";
 	
 	protected static final String LAL_PROPERTIES_NOT_FOUND = "lals.properties not found";
 	protected static final String NO_MORE_LINES = "No more lines for line number [%d]";
+	
+	private static final ThreadLocal<Map<String, Line>> gdLocal = new ThreadLocal<Map<String, Line>>() {
+		@Override
+		protected Map<String, Line> initialValue() {
+			return new HashMap<>();
+		}
+	};
 
 	public static DeviceLoL makeMockLoL(int id, double latitude, double longitude) {
 		DeviceLoL mockLoL = new DeviceLoL();
@@ -42,60 +54,73 @@ public class LaLUtil {
 		double d = 2 * R * Math.asin(Math.sqrt(sa2 * sa2 + Math.cos(latFrom) * Math.cos(latTo) * sb2 * sb2));
 		return d;
 	}
-
-	public static List<Line> readLines(File file) {
-		List<Line> lines = new ArrayList<>();
-		BufferedReader reader = null;
-		try {
-
-			reader = new BufferedReader(new FileReader(file));
+	
+	public static Map<String, Line> readLines(File file) {
+		if (gdLocal.get().size() != 0) {
+			return gdLocal.get();
+		}
+		
+		ConcurrentHashMap<String, Line> linesMap = new ConcurrentHashMap<>();
+		try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
 			String tempString = null;
 			Line line = null;
 			String lineName = "";
 			while ((tempString = reader.readLine()) != null) {
-				if (tempString.startsWith(LINE_PREFIX)) {
-					if (!lineName.equals(tempString.trim())) {
-						lineName = tempString.trim();
-
+				tempString = tempString.trim();
+				if (tempString.matches(GD_PATTERN)) {
+					if (!lineName.equals(tempString)) {
+						lineName = tempString;
+						
 						if (line != null) {
-							lines.add(line);
+							linesMap.putIfAbsent(line.getName(), line);
 						}
-
+						
 						line = new Line();
 						line.setName(lineName);
 					}
 				} else {
-					String[] lal = tempString.trim().split(COMMA);
+					String[] lal = tempString.split(COMMA);
 					line.appendLal(new LaL(Double.valueOf(lal[0]), Double.valueOf(lal[1])));
 				}
 			}
-
+			
 			if (line != null) {
-				lines.add(line);
-			}
-
-			reader.close();
-
-		} catch (FileNotFoundException e) {
-			throw new WhereAmIException(e);
-		} catch (IOException e) {
-
-		} finally {
-			if (reader != null) {
-				try {
-					reader.close();
-				} catch (IOException e1) {
-					throw new WhereAmIException(e1);
-				}
+				linesMap.putIfAbsent(line.getName(), line);
 			}
 		}
-
-		return lines;
-
+		catch (IOException e) {
+			throw new WhereAmIException(e);
+		}
+		
+		gdLocal.set(linesMap);
+		
+		return gdLocal.get();
+		
+	}
+	
+	public static List<LaL> getLalPoints(String gd) {
+		Map<String, Line> lines = null;
+		try {
+			lines = readLines(ResourceUtils.getFile("classpath:static/lals.properties"));
+		} catch (FileNotFoundException e) {
+			throw new WhereAmIException(LAL_PROPERTIES_NOT_FOUND, e);
+		}
+		
+		List<LaL> lals = new ArrayList<>();
+		
+		if (lines.get(gd) == null) {
+			throw new WhereAmIException(String.format(GD_NOT_FOUND, gd));
+		}
+		
+		lals.addAll(lines.get(gd).getLals());
+		
+		return lals;
 	}
 
+	@Deprecated
 	public static List<LaL> getLalPoints(int lineNum) {
-		List<Line> lines = null;
+		Map<String, Line> lines = null;
+		// List<Line> lines = null;
 		try {
 			lines = readLines(ResourceUtils.getFile("classpath:static/lals.properties"));
 		} catch (FileNotFoundException e) {
