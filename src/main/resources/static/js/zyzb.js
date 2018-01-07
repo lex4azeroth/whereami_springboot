@@ -318,12 +318,30 @@ function updateDeviceName() {
 	});
 }
 
+function getDateStr(addDayCount) {
+	var dd = new Date();
+	dd.setDate(dd.getDate() + addDayCount);
+	var y = dd.getFullYear();
+	var m = dd.getMonth() + 1;
+	var d = dd.getDate();
+	if (m >= 1 && m < 10) {
+		m = '0' + m;
+	}
+	
+	if (d >=1 && d < 10) {
+		d = '0' + d;
+	}
+	
+	return y + '-' + m + '-' + d;
+}
+
+
 $(document).ready(function() {
 		// showDeviceList();
-		
-		$('#fromDate').val(moment().format('YYYY-MM-DD'));
+		$('#fromDate').val(getDateStr(-1));
 		$('#endDate').val(moment().format('YYYY-MM-DD'));
-		$('#fromTime').val(moment().format('hh:mm:ss'));
+		//$('#fromTime').val(moment().format('hh:mm:ss'));
+		$('#fromTime').val(moment().format('18:01:ss'));
 		$('#endTime').val(moment().format('hh:mm:ss'));
 		$('#lineNum').val(1);
 		$('#originalBtn').css("visibility", "hidden");
