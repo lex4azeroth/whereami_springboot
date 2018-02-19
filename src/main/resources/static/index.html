@@ -7,39 +7,58 @@
 </head>
 <body>
 	<div id="Content-Top">
-		<label id='currentDevice'/>
-	</div>
-	<div id="Content-Left">
-		设备列表
+		<div id='deviceTitle'>
+			上海南翔站货检员作业轨迹追踪系统 <label id='currentDevice' />
+		</div>
+		<button id='adminLoginButton' onclick='adminLogin()'></button>
 	</div>
 
 	<div id="Content-Main">
 		<p />
-		<label for="fromDate">起始日期</label><input id="fromDate" type="date" required />
-		<label for="fromTime">起始时间</label><input id="fromTime" type="time" required />
-		<label id="fromValidator" />
+		<label for="fromDate">开始日期</label><input id="fromDate" type="date"
+			required /> <label for="fromTime">结束时间</label><input id="fromTime"
+			type="time" required /> <label id="fromValidator" />
 		<p />
-		<label for="endDate">结束日期</label><input id="endDate" type="date" required />
-		<label for="endTime">结束时间</label><input id="endTime" type="time" required />
-		<label id="endValidator" />
+		<label for="endDate">结束日期</label><input id="endDate" type="date"
+			required /> <label for="endTime">结束时间</label><input id="endTime"
+			type="time" required /> <label id="endValidator" />
 		<p />
-		<!-- <button onclick="showMap()">火车站</button> -->
-		<label for="lineNum">线路</label><input id="lineNum" type="number" min="0" max="25" required/>
-		<label id="lineNumValidator" />
+		<form id='whichRoute' action="" method="get">
+			<!-- <label><input id='theoptimizedroute' name="route" type="radio" value="ihavebeen" checked="true"/>优化路径</label> -->
+			<!-- <label><input name="route" type="radio" value="ihavebeenoriginal" />原始路径</label> -->
+		</form>
+		<select id="cbmSelector" reg="[^0]">
+		</select>
+		<button id="confirm" onclick="ajaxT()">查询</button>
+		<button id="deviceMapping" onclick="mappdevice()">配置设备列表</button>
 		<p />
-		<button onclick="whereami()">优化路线</button>
-		<button onclick="whereamioriginal()">原始路线</button>
-		<p />
-		<!--<div style="width:1000px;height:500px;border:1px solid gray" id="container"></div>-->
-		<div style="width: 100%; height: 100%; border: 1px solid gray"
-			id="container"></div>
+		<div id="tableAjax"></div>
+		<div id="myMap">
+			<div id='mapContainer'></div>
+		</div>
+		
+		<div id="adminLogin">
+			<div id='adminManagement'></div>
+		</div>
+	
+		<div id="myModal" class="modal">
+			<div class="modal-content">
+				<div id="modelbody" class="modal-body">
+					<span class="close" onclick='closeAdminLogin()'>×</span>
+					<div id="content">
+	
+					</div>
+				</div>
+				<div class="modal-footer">
+				</div>
+	  	</div>
 	</div>
-	<!-- jQuery 2.2.0 -->
 	<script type="text/javascript" src="js/jQuery-2.2.0.min.js"></script>
 	<script type="text/javascript" src="js/json2.js"></script>
 	<script type="text/javascript" src="js/apiv1.3.js"></script>
 	<script type="text/javascript" src="js/moment.js"></script>
-	<script type="text/javascript" src="js/GPSUtil.js"></script><script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript" src="js/GPSUtil.js"></script>
+	<script type="text/javascript" src="js/zyzb.js"></script>
 
 </body>
 </html>

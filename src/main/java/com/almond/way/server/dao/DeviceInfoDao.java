@@ -11,6 +11,8 @@ public interface DeviceInfoDao {
 	DeviceInfo getDeviceInfo(DeviceInfo deviceInfo);
 	
 	List<DeviceLoL> getDeviceLaL(@Param("deviceId") String deviceId, @Param("from") String from, @Param("to") String to);
+	
+	List<DeviceLoL> getDeviceLaLWithNoId(@Param("from") String from, @Param("to") String to);
 		
 	void addDeviceInfo(DeviceInfo deviceInfo);
 	

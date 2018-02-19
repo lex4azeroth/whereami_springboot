@@ -27,33 +27,39 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
 
 	private static String deviceLog = "device id is [%s], from is [%s], to is [%s]";
 	
-	static final String NO_THING_FOUND = "No device info found";
-	
-	protected DeviceInfoServiceImpl(DeviceInfoDao deviceInfoDao) {
-		this.deviceInfoDao = deviceInfoDao;
-	}
+	static final String NOTHING_FOUND = "No device info found";
 
 	@Override
-	public List<DeviceLoL> getDeviceLalInfo(String deviceId, String from, String to, int lineNum) {
+	public List<DeviceLoL> getDeviceLalInfo(String deviceId, String from, String to, String lineNum) {
 		logger.info(String.format(deviceLog, deviceId, from, to));
 		
 		List<DeviceLoL> queriedLoL = deviceInfoDao.getDeviceLaL(deviceId, from, to);
-		if (queriedLoL == null || queriedLoL.isEmpty()) {
-			logger.error(NO_THING_FOUND);
-			throw new WhereAmIException(NO_THING_FOUND);
+		
+		if (queriedLoL.isEmpty()) {
+			queriedLoL = deviceInfoDao.getDeviceLaLWithNoId(from, to);
+		}
+		
+		if (queriedLoL.isEmpty()) {
+			logger.error(NOTHING_FOUND);
+			return new ArrayList<DeviceLoL>();
 		}
 
 		return filterDeviceLal(queriedLoL, lineNum);
 	}
 	
 	@Override
-	public List<DeviceLoL> getDeviceOriginalLalInfo(String deviceId, String from, String to, int lineNum) {
+	public List<DeviceLoL> getDeviceOriginalLalInfo(String deviceId, String from, String to, String lineNum) {
 		logger.info(String.format(deviceLog, deviceId, from, to));
 		
 		List<DeviceLoL> queriedLoL = deviceInfoDao.getDeviceLaL(deviceId, from, to);
-		if (queriedLoL == null || queriedLoL.isEmpty()) {
-			logger.error(NO_THING_FOUND);
-			throw new WhereAmIException(NO_THING_FOUND);
+		
+		if (queriedLoL.isEmpty()) {
+			queriedLoL = deviceInfoDao.getDeviceLaLWithNoId(from, to);
+		}
+		
+		if (queriedLoL.isEmpty()) {
+			logger.error(NOTHING_FOUND);
+			return new ArrayList<DeviceLoL>();
 		}
 		
 		List<DeviceLoL> convertedLoL = new ArrayList<DeviceLoL>();
@@ -69,12 +75,11 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
 		return convertedLoL;
 	}
 	
-	List<DeviceLoL> filterDeviceLal(List<DeviceLoL> lolListToFilter, int lineNum) {
+	List<DeviceLoL> filterDeviceLal(List<DeviceLoL> lolListToFilter, String lineNum) {
 		logger.info("queried size [" + lolListToFilter.size() + "]");
 		List<LaL> lalPoints = LaLUtil.getLalPoints(lineNum);
 		List<DeviceLoL> resultMap = new ArrayList<DeviceLoL>();
 		for (DeviceLoL dlol : lolListToFilter) {
-//			LaL target = new LaL(Double.valueOf(dlol.getLongitude()), Double.valueOf(dlol.getLatitude()));
 			LaL target = GPSUtil.WGS2BD(Double.valueOf(dlol.getLatitude()), Double.valueOf(dlol.getLongitude()));
 			for (int index = 0; index < lalPoints.size(); index++) {
 				double distance = LaLUtil.getDistance(target, lalPoints.get(index));
@@ -94,8 +99,4 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
 		
 		return resultMap;
 	}
-	
-	
-	
-
 }

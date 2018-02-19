@@ -35,8 +35,8 @@ spring:
         #trustedPackages: com.almond.way.server.model
         #packages.trusted: com.almond.way.server.model.DeviceInfo
     
-    profiles:
-        active: dev    
+#    profiles:
+#        active: local    
 # LOGGING  
 #logging:
 #    file: ../logs/waylog.log
@@ -44,4 +44,6 @@ spring:
 #    level:  
 #       com.ibatis:DEBUG
   
- 
+admin:
+  username: admin
+  password: admin

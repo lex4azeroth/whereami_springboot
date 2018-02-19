@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 import org.h2.tools.Server;
-//import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +22,16 @@ public class DataSourceConfiguration {
 	private String username;
 	@Value("${jdbc.password}")
 	private String password;
+	
+	@Bean(name="dataSource")
+	public DriverManagerDataSource dataSource() {
+		DriverManagerDataSource dataSource = new DriverManagerDataSource();
+		dataSource.setDriverClassName(driver);
+		dataSource.setUrl(url);
+		dataSource.setUsername(username);
+		dataSource.setPassword(password);
+		return dataSource;
+	}
 
 	@Profile("prod")
 	@Bean(name="dataSource")
@@ -46,9 +55,8 @@ public class DataSourceConfiguration {
 		return dataSource;
 	}
 	
-	@Profile("integration")
+	@Profile("local")
 	@Bean(name = "dataSource")
-	@DependsOn("h2WebServer")
 	public DataSource h2Standalone() {
 		DriverManagerDataSource ds = new DriverManagerDataSource();
 		ds.setDriverClassName("org.h2.Driver");
@@ -58,9 +66,9 @@ public class DataSourceConfiguration {
 		return ds;
 	}
 
-	@Profile("integration")
-	@Bean(name = "h2WebServer", destroyMethod = "stop")
-	public Server h2WebServer() throws SQLException {
-		return Server.createWebServer("-tcpPort", "8082", "-trace").start();
-	}
+//	@Profile("local")
+//	@Bean(name = "h2WebServer", destroyMethod = "stop")
+//	public Server h2WebServer() throws SQLException {
+//		return Server.createWebServer("-tcpPort", "8082", "-trace").start();
+//	}
 }

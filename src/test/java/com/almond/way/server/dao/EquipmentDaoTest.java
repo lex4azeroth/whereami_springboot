@@ -29,7 +29,7 @@ import com.almond.way.server.configuration.WebMvcConfig;
 import com.almond.way.server.model.Equipment;
 
 @RunWith(SpringRunner.class)
-@ActiveProfiles(profiles = {"integration"})
+@ActiveProfiles(profiles = {"local"})
 @SpringBootTest(classes = {ServerApplication.class})
 @ContextConfiguration(classes = {
                                  DataSourceConfiguration.class, 
@@ -108,5 +108,17 @@ public class EquipmentDaoTest {
 		assertNotNull(retrievedEqu);
 		assertEquals(EQUIPMENT_NAME, retrievedEqu.getEquipmentName());
 		assertEquals(EQUIPMENT_ID, retrievedEqu.getEquipmentId());
+	}
+	
+	@Test
+	public void testUpdateDeviceName() {
+		int result = equipmentDao.registDevice(equipment);
+		assertEquals(1, result);
+		
+		String newName = "二狗子";
+		equipment.setEquipmentName(newName);
+		equipmentDao.updateDeviceName(equipment);
+		Equipment updatedEqu = equipmentDao.getDevice(equipment.getEquipmentId());
+		assertEquals(newName, updatedEqu.getEquipmentName());		
 	}
 }

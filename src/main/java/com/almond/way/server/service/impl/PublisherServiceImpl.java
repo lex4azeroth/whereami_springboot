@@ -3,6 +3,7 @@ package com.almond.way.server.service.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import com.almond.way.server.model.DeviceInfo;
 import com.almond.way.server.service.PublisherService;
 
 @Service
+//@ConditionalOnBean(name="ActiveMqConfiguration")
 public class PublisherServiceImpl implements PublisherService {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	

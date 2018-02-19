@@ -1,3 +1,69 @@
+function mappdevice() {
+	$('#myModal').css("display", "block");
+	$('#content').html(mappingTable);
+	$('#modelbody').css("height", "70%");
+	showDeviceList2();
+}
+
+function doLogin() {
+	currentRoleIsAdmin = ($("#username")[0].value == $("#password")[0].value);
+
+	if (currentRoleIsAdmin) {
+		$("#originalBtn").css("visibility", "visible");
+		$('#deviceMapping').css("visibility", "visible");
+		$("#adminLoginButton").text("管理员登出");
+		$("#myModal").css("display", "none");
+	}
+}
+
+function adminLogin() {
+
+	if (!currentRoleIsAdmin) {
+		$('#myModal').css("display", "block");
+		$('#content').html(loginContent);
+		$('#modelbody').css("height", "40%");
+		$("#username")[0].value="";
+		$("#password")[0].value=""
+	} else {
+		$("#originalBtn").css("visibility", "hidden");
+		$('#deviceMapping').css("visibility", "hidden");
+		$("#adminLoginButton").text("管理员登入");
+		$('#myModal').css("display", "none");
+		currentRoleIsAdmin = false;
+	}
+	// $('#myModal').css("display", "block"); 
+}
+
+function closeAdminLogin() {
+	$('#myModal').css("display", "none"); 
+}
+
+function closeDeviceMapping() {
+	$('#myModal2').css("display", "none");
+}
+
+function adminLogin2() {
+	$('#adminLogin').addClass("float_admin");
+
+	var adminPage = "<div id='container' class='float_admin'></div><div><a href='javascript:;' class='float_close' data-role='button' onclick='closeMapLayer()'>关闭</a></div>";
+	$('#adminManagement').html(adminPage);
+	// var guid = obj.childNodes[0].innerText;
+	// var zykssj = obj.childNodes[3].innerText;
+	// var zyjssj = obj.childNodes[4].innerText;
+	// var gd = obj.childNodes[6].innerText;
+	// $("#myMap").addClass("float_map");
+	// var container = "<div id='container' class='float_map'></div><div><a href='javascript:;' class='float_close' data-role='button' onclick='closeMapLayer()'>关闭</a></div>";
+	// $("#mapContainer").html(container);
+	// $("#myMap").css("display", "block");
+	// var whichRoute = $('#whichRoute input:radio:checked').val();
+	// var restURL = whichRoute + "/" + guid + "/" + zykssj + "/" + zyjssj + "/" + gd;
+	// whereami(restURL);
+}
+
+function closeMapLayer() {
+	$("#adminLogin").css("display", "none");
+}
+
 function showMap() {
 var map = new BMap.Map("container",{mapType: BMAP_SATELLITE_MAP});      //设置卫星图为底图
 var point = new BMap.Point(121.323258,31.284051);    // 创建点坐标
@@ -275,6 +341,40 @@ function showDeviceList() {
 	});
 }
 
+function showDeviceList2() {
+	var devices = new Array();
+    $.ajax({
+		type: "GET",
+        url: "equipments",
+		async: true,
+		contentType: "application/json",
+        cache:false,
+		success: function(data) {
+			devices = data;
+		    for (var index = 0; index < devices.length; index++) {
+		    	var li = document.createElement('li');
+				var equId = devices[index].equipmentId;
+				var id = devices[index].id;
+				var equName = devices[index].equipmentName;
+		    	li.setAttribute('class', 'device');
+				li.setAttribute('id', equId);
+				// li.setAttribute('equId', equId);
+				// li.setAttribute('equName', equName);
+		    	li.innerHTML = equId;
+				li.onclick = deviceMappingChoosen;
+		        $('#Content-Left-Mini').append(li);
+		    }
+		}
+	});
+}
+
+function deviceMappingChoosen() {
+	alert(this.id);
+	var equId = this.id;
+
+	$('#equDetailId').text(equId);
+}
+
 function deviceChoosen() {
 	currentDeviceId = this.id;
 	$('#currentDevice').text("当前设备：" + currentDeviceId);
@@ -295,6 +395,15 @@ $(document).ready(function() {
 		$('#fromTime').val(moment().format('hh:mm:ss'));
 		$('#endTime').val(moment().format('hh:mm:ss'));
 		$('#lineNum').val(1);
+		$('#originalBtn').css("visibility", "hidden");
+		$('#deviceMapping').css("visibility", "hidden");
+		$('#theoriginal').css("visibility", "hidden");
+		$("#adminLoginButton").text("管理员登入");
+		currentRoleIsAdmin = false;
+		// $("adminLogoutButton").css("visibility", "hidden");
 	});
 
 var currentDeviceId;
+var currentRoleIsAdmin;
+var mappingTable = "<div class='mapping-top' id=''>设备配置管理</div><div id='Content-Left-Mini' class='deviceList'></div><div class='mapping-detail'><table id='deviceDetailTabel'><tr><td><label style='text-align=right'>设备编号：</label></td><td><label id='equDetailId'></lable></td></tr><tr><td><label style='text-align=right'>设备名称：</lable></td><td><input id='equDetailName' type='text'></input></td></tr><tr><td colspan='2' style='height:40px;'></td></tr><tr><td colspan='2'><button>更新</button></td></tr></table></div>";
+var loginContent = "<table><tr><td colspan='2'>管理员登入</td></tr><tr><td colspan='2' style='height:20px'></td></tr><tr><td><label>管理员账号</label></td><td><input id='username' type='text'></input></td></tr><tr><td><label>管理员账号</label></td><td><input id='password' type='password'></input></td></tr><tr><td colspan='2' style='height:40px'></td></tr><tr><td colspan='2'><button onclick='doLogin()'>登入</button></td></tr></table>"

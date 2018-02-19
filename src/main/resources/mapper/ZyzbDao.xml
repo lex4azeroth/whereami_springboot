@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.almond.way.server.dao.ZyzbDao">  
+
+<!-- <select id="getDeviceList" resultType="com.almond.way.server.model.MockZyzb">  
+    SELECT PDA_ID as pdaID, PDA_NAME as pdaName FROM TV_TD_ZYZB
+</select> -->
+
+<select id="getZyzbList" resultType="com.almond.way.server.model.ZYZB" parameterType="HashMap">  
+<!--     select GUID, GD, tv_td_zyzb.LCBZ, tv_td_pda_zyzb.ZYKSSJ, tv_td_pda_zyzb.ZYJSSJ from tv_td_zyzb left join tv_td_pda_zyzb on tv_td_zyzb.LCBZ = tv_td_pda_zyzb.LCBZ where GUID in (select GUID from WAY_EQU) and tv_td_pda_zyzb.ZYKSSJ &gt;=#{from} and tv_td_pda_zyzb.ZYJSSJ &lt;=#{to}
+ -->    
+ select tv_td_zyzb.GD, tv_td_zyzb.cfcc, tv_td_zyzb.ddcc, tv_td_zyzb.ZFJ, tv_td_zyzb.ZEQUID, tv_td_zyzb.YFJ, tv_td_zyzb.YEQUID, tv_td_zyzb.LCBZ, tv_td_pda_zyzb.ZYKSSJ, tv_td_pda_zyzb.ZYJSSJ from tv_td_zyzb left join tv_td_pda_zyzb on tv_td_zyzb.LCBZ = tv_td_pda_zyzb.LCBZ where tv_td_pda_zyzb.ZYKSSJ &gt;=#{from} and tv_td_pda_zyzb.ZYJSSJ &lt;=#{to} and tv_td_zyzb.GD in (select tv_td_cbm.GD from tv_td_cbm where tv_td_cbm.cbm = #{cbm}) and ((tv_td_zyzb.ZFJ in (select EQU_NAME from WAY_EQU)) or (tv_td_zyzb.YFJ in (select EQU_NAME from WAY_EQU))) order by tv_td_pda_zyzb.ZYKSSJ desc
+</select>
+
+<select id="getCbmList" resultType="com.almond.way.server.model.CBM">     
+ select distinct tv_td_cbm.cbm from tv_td_cbm order by tv_td_cbm.cbm asc 
+</select>
+
+<!-- <select id="getDevice" resultType="com.almond.way.server.model.Equipment" parameterType="String">  
+    SELECT ID as ID, EQU_ID as EQUIPMENTID, EQU_NAME as EQUIPMENTNAME FROM WAY_EQU WHERE EQU_ID=#{equipmentId}
+</select>
+
+<delete id="deleteDevice" parameterType="int">  
+    DELETE FROM WAY_EQU WHERE id=#{id}  
+</delete> -->
+<!-- <update id="updateUser" parameterType="com.springMyBatis.system.model.User">  
+    UPDATE user SET password=#{password} WHERE id=#{id}  
+</update>  
+<delete id="deleteUser" parameterType="int">  
+    DELETE FROM user WHERE id=#{id}  
+</delete>   -->
+</mapper>

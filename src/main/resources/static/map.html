@@ -1,0 +1,45 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css/way.css" />
+<link rel="stylesheet" type="text/css" href="css/bmap.css" />
+<meta charset="UTF-8">
+<title>WhereAmI</title>
+</head>
+<body>
+	<div id="Content-Top">
+		<label id='currentDevice'/>
+	</div>
+	<div id="Content-Left">
+		设备列表
+	</div>
+
+	<div id="Content-Main">
+		<p />
+		<label for="fromDate">起始日期</label><input id="fromDate" type="date" required />
+		<label for="fromTime">起始时间</label><input id="fromTime" type="time" required />
+		<label id="fromValidator" />
+		<p />
+		<label for="endDate">结束日期</label><input id="endDate" type="date" required />
+		<label for="endTime">结束时间</label><input id="endTime" type="time" required />
+		<label id="endValidator" />
+		<p />
+		<!-- <button onclick="showMap()">火车站</button> -->
+		<label for="lineNum">线路</label><input id="lineNum" type="number" min="0" max="25" required/>
+		<label id="lineNumValidator" />
+		<p />
+		<button onclick="whereami()">优化路线</button>
+		<button onclick="whereamioriginal()">原始路线</button>
+		<p />
+		<!--<div style="width:1000px;height:500px;border:1px solid gray" id="container"></div>-->
+		<div style="width: 100%; height: 100%; border: 1px solid gray"
+			id="container"></div>
+	</div>
+	<!-- jQuery 2.2.0 -->
+	<script type="text/javascript" src="js/jQuery-2.2.0.min.js"></script>
+	<script type="text/javascript" src="js/json2.js"></script>
+	<script type="text/javascript" src="js/apiv1.3.js"></script>
+	<script type="text/javascript" src="js/moment.js"></script>
+	<script type="text/javascript" src="js/GPSUtil.js"></script><script type="text/javascript" src="js/main.js"></script>
+
+</body>
+</html>
