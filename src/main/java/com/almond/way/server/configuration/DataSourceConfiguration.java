@@ -55,9 +55,8 @@ public class DataSourceConfiguration {
 		return dataSource;
 	}
 	
-	@Profile("integration")
+	@Profile("local")
 	@Bean(name = "dataSource")
-	@DependsOn("h2WebServer")
 	public DataSource h2Standalone() {
 		DriverManagerDataSource ds = new DriverManagerDataSource();
 		ds.setDriverClassName("org.h2.Driver");
@@ -67,9 +66,9 @@ public class DataSourceConfiguration {
 		return ds;
 	}
 
-	@Profile("integration")
-	@Bean(name = "h2WebServer", destroyMethod = "stop")
-	public Server h2WebServer() throws SQLException {
-		return Server.createWebServer("-tcpPort", "8082", "-trace").start();
-	}
+//	@Profile("local")
+//	@Bean(name = "h2WebServer", destroyMethod = "stop")
+//	public Server h2WebServer() throws SQLException {
+//		return Server.createWebServer("-tcpPort", "8082", "-trace").start();
+//	}
 }

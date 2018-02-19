@@ -5,12 +5,17 @@ import javax.jms.Queue;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQQueue;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Condition;
+import org.springframework.context.annotation.ConditionContext;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.core.type.AnnotatedTypeMetadata;
 import org.springframework.jms.support.converter.MessageConverter;
 
 import com.almond.way.server.utils.DeviceInfoMessageConverter;
 
 
+@Profile("prod")
 @Configuration
 public class ActiveMqConfiguration {
 	
@@ -18,24 +23,13 @@ public class ActiveMqConfiguration {
 	public MessageConverter deviceInfoMessageConverter() {
 		return new DeviceInfoMessageConverter();
 	}
-	
-//    @Bean
-//    public JmsListenerContainerFactory<?> deviceInfoMessageFactory(ConnectionFactory connectionFactory,
-//                                                    DefaultJmsListenerContainerFactoryConfigurer configurer) {
-//        DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
-//        // This provides all boot's default to this factory, including the message converter
-//        configurer.configure(factory, connectionFactory);
-//        // You could still override some of Boot's default if necessary.
-//        return factory;
-//    }
-    
     
     @Bean  
     public Queue queue() {  
         return new ActiveMQQueue("almond-way");  
     }  
   
-    @Bean  
+    @Bean
     public ActiveMQConnectionFactory activeMQConnectionFactory (){  
         ActiveMQConnectionFactory activeMQConnectionFactory =  
                 new ActiveMQConnectionFactory(  
@@ -45,6 +39,5 @@ public class ActiveMqConfiguration {
                         ActiveMQConnectionFactory.DEFAULT_BROKER_URL);  
         activeMQConnectionFactory.setTrustAllPackages(true);
         return activeMQConnectionFactory;  
-    }  
-
+    }
 }

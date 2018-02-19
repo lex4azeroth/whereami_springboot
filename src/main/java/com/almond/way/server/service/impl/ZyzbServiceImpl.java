@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.almond.way.server.dao.ZyzbDao;
+import com.almond.way.server.model.CBM;
 import com.almond.way.server.model.ZYZB;
 import com.almond.way.server.service.ZyzbService;
 
@@ -23,18 +24,23 @@ public class ZyzbServiceImpl implements ZyzbService {
 	private ZyzbDao zyzbDao;
 	
 	@Override
-	public List<ZYZB> getZyzbList(String from, String to) {
+	public List<ZYZB> getZyzbList(String from, String to, String cbm) {
 		if (StringUtils.isEmpty(from) || StringUtils.isEmpty(to)) {
 			throw new InvalidParameterException(INVALID_INPUT);
 		}
 		
-		List<ZYZB> zyzbList = zyzbDao.getZyzbList(from, to);
+		List<ZYZB> zyzbList = zyzbDao.getZyzbList(from, to, cbm);
 		
 		if (zyzbList == null || zyzbList.isEmpty()) {
 			logger.error(NOTHING_FOUND);
 			return new ArrayList<ZYZB>();
 		}
 		
-		return zyzbDao.getZyzbList(from, to);
+		return zyzbDao.getZyzbList(from, to, cbm);
+	}
+
+	@Override
+	public List<CBM> getCbmList() {
+		return zyzbDao.getCbmList();
 	}
 }

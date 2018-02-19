@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,8 +23,9 @@ import com.almond.way.server.configuration.WebMvcConfig;
 import com.almond.way.server.model.ZYZB;
 
 @RunWith(SpringRunner.class)
-@ActiveProfiles(profiles = {"dev"})
+@ActiveProfiles(profiles = {"local"})
 @SpringBootTest(classes = {ServerApplication.class})
+@Ignore
 @ContextConfiguration(classes = {
                                  DataSourceConfiguration.class, 
                                  ActiveMqConfiguration.class, 
@@ -37,7 +39,7 @@ public class ZyzbDaoTest {
 	
 	@Test
 	public void testGetZyzbList() {
-		List<ZYZB> zyzbList = mockZyzbDao.getZyzbList("2017-02-06 12:30:47", "2017-02-06 12:36:23");
+		List<ZYZB> zyzbList = mockZyzbDao.getZyzbList("2017-02-06 12:30:47", "2017-02-06 12:36:23", null);
 		int size = zyzbList.size();
 		assertTrue(size > 0);
 	}

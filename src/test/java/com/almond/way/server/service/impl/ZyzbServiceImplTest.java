@@ -40,7 +40,7 @@ public class ZyzbServiceImplTest {
 	@Test(expected = InvalidParameterException.class)
 	public void testGetZyzbListWithEmptyFromAndTo() {
 		try {
-			service.getZyzbList(EMPTY, EMPTY);
+			service.getZyzbList(EMPTY, EMPTY, EMPTY);
 		} catch (WhereAmIException e) {
 			assertEquals(ZyzbService.INVALID_INPUT, e.getMessage());
 			throw e;
@@ -50,7 +50,7 @@ public class ZyzbServiceImplTest {
 	@Test(expected = InvalidParameterException.class)
 	public void testGetZyzbListWithNull() {
 		try {
-			service.getZyzbList(null, null);
+			service.getZyzbList(null, null, null);
 		} catch (WhereAmIException e) {
 			assertEquals(ZyzbService.INVALID_INPUT, e.getMessage());
 			throw e;
@@ -60,7 +60,7 @@ public class ZyzbServiceImplTest {
 	@Test(expected = InvalidParameterException.class)
 	public void testGetZyzbListWithEmptyFrom() {
 		try {
-			service.getZyzbList(null, "abc");
+			service.getZyzbList(null, "abc", null);
 		} catch (WhereAmIException e) {
 			assertEquals(ZyzbService.INVALID_INPUT, e.getMessage());
 			throw e;
@@ -70,7 +70,7 @@ public class ZyzbServiceImplTest {
 	@Test(expected = InvalidParameterException.class)
 	public void testGetZyzbListWithEmptyTo() {
 		try {
-			service.getZyzbList("ddd", "");
+			service.getZyzbList("ddd", "", null);
 		} catch (WhereAmIException e) {
 			assertEquals(ZyzbService.INVALID_INPUT, e.getMessage());
 			throw e;
@@ -81,8 +81,8 @@ public class ZyzbServiceImplTest {
 	public void testGetZyzbListNotFound() {
 		String from = "from";
 		String to = "to";
-		Mockito.when(zyzbDao.getZyzbList(from, to)).thenReturn(new ArrayList<ZYZB>());
-		List<ZYZB> zyzbList = service.getZyzbList(from, to);
+		Mockito.when(zyzbDao.getZyzbList(from, to, "cmb")).thenReturn(new ArrayList<ZYZB>());
+		List<ZYZB> zyzbList = service.getZyzbList(from, to, "cbm");
 		assertTrue(zyzbList.size() == 0);
 	}
 }

@@ -52,7 +52,9 @@ function ajaxT() {
 		return;
 	}
 	
-	var restURL = "showmethelist/" + fromDateTime + "/" + endDateTime;
+	var cbm = $("#cbmSelector").find('option:selected')[0].innerHTML;
+	
+	var restURL = "showmethelist/" + fromDateTime + "/" + endDateTime + "/" + cbm;
 	
 	$.ajax({
 		type: "GET",
@@ -335,6 +337,23 @@ function getDateStr(addDayCount) {
 	return y + '-' + m + '-' + d;
 }
 
+function initCbm() {
+
+	$.ajax({
+		type: "GET",
+        url: "showcbm",
+		async: true,
+		//contentType: "application/json",
+        cache:false,
+		success : function(data) {
+			var l = data.length - 1;
+			$("#cbmSelector").append($("<option value=\"" + 0 + "\">" + data[l].cbm + "</option>"))
+			for (var i = 0; i < l; i++) {
+				$("#cbmSelector").append($("<option value=\"" + i + "\">" + data[i].cbm + "</option>"));
+			}
+		}
+	});
+}
 
 $(document).ready(function() {
 		// showDeviceList();
@@ -342,7 +361,7 @@ $(document).ready(function() {
 		$('#endDate').val(moment().format('YYYY-MM-DD'));
 		//$('#fromTime').val(moment().format('hh:mm:ss'));
 		$('#fromTime').val(moment().format('18:01:ss'));
-		$('#endTime').val(moment().format('hh:mm:ss'));
+		$('#endTime').val(moment().format('HH:mm:ss'));
 		$('#lineNum').val(1);
 		$('#originalBtn').css("visibility", "hidden");
 		$('#deviceMapping').css("visibility", "hidden");
@@ -351,6 +370,9 @@ $(document).ready(function() {
 		$('#whichRoute').append(theOptimized);
 		currentRoleIsAdmin = false;
 		// $("adminLogoutButton").css("visibility", "hidden");
+		
+		initCbm();
+		
 	});
 
 var currentDeviceId;

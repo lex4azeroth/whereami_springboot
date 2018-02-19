@@ -29,7 +29,7 @@ import com.almond.way.server.configuration.WebMvcConfig;
 import com.almond.way.server.model.Equipment;
 
 @RunWith(SpringRunner.class)
-@ActiveProfiles(profiles = {"integration"})
+@ActiveProfiles(profiles = {"local"})
 @SpringBootTest(classes = {ServerApplication.class})
 @ContextConfiguration(classes = {
                                  DataSourceConfiguration.class, 

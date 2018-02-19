@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.almond.way.server.model.CBM;
 import com.almond.way.server.model.DeviceInfo;
 import com.almond.way.server.model.DeviceLoL;
 import com.almond.way.server.model.Equipment;
@@ -29,7 +30,7 @@ import com.almond.way.server.service.ZyzbService;
 public class WhereAmIController {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	@Autowired
+	@Autowired(required=false)
 	@Qualifier("publisherServiceImpl")
 	private PublisherService publisher;
 	
@@ -109,13 +110,14 @@ public class WhereAmIController {
 		return deviceInfoService.getDeviceOriginalLalInfo(equid, from, to, line);
 	}
 	
-	@RequestMapping(value="showmethelist/{from}/{to}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="showmethelist/{from}/{to}/{cbm}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<ZYZB> getZyzbList(
 	                              @PathVariable("from") String from, 
-	                              @PathVariable("to") String to) {
+	                              @PathVariable("to") String to, 
+	                              @PathVariable("cbm") String cbm) {
 		logger.info("show me the list...");
-		return zyzbService.getZyzbList(from, to);
+		return zyzbService.getZyzbList(from, to, cbm);
 	}
 	
 	@RequestMapping(value="updatedevicename/{id}/{name}", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
@@ -133,5 +135,12 @@ public class WhereAmIController {
 	public String getDeviceName(@PathVariable("id") String id) {
 		logger.info("Get device name");
 		return equipmentService.getDeviceName(id);
+	}
+	
+	@RequestMapping(value="showcbm", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<CBM> getZyzbList() {
+		logger.info("show cmb list...");
+		return zyzbService.getCbmList();
 	}
 }
